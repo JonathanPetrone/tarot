@@ -7,29 +7,49 @@ import (
 )
 
 type Spread struct {
+	Name     string
+	Length   int
+	Template []SpreadCard
+}
+
+type SpreadCard struct {
 	Position int
 	Context  string
 	Card     TarotCard
 }
 
-var CelticCross = []Spread{
-	{Position: 1, Context: "Current Situation: "},
-	{Position: 2, Context: "Challenges/Obstacles: "},
-	{Position: 3, Context: "Strengths: "},
-	{Position: 4, Context: "Need to Focus on: "},
-	{Position: 5, Context: "The Past or Leaving Energy: "},
-	{Position: 6, Context: "Near Future and Upcoming Energy: "},
-	{Position: 7, Context: "Advice: "},
-	{Position: 8, Context: "External influences: "},
-	{Position: 9, Context: "Hopes and Fears: "},
-	{Position: 10, Context: "Current Future Outcome: "},
+var PastPresentFuture = Spread{
+	Name:   "Past-Present-Future",
+	Length: 3,
+	Template: []SpreadCard{
+		{Position: 1, Context: "Past"},
+		{Position: 2, Context: "Present"},
+		{Position: 3, Context: "Future"},
+	},
 }
 
-func ReadCelticCross() []Spread {
-	reading := make([]Spread, len(CelticCross))
-	copy(reading, CelticCross)
+var CelticCross = Spread{
+	Name:   "Celtic Cross",
+	Length: 10,
+	Template: []SpreadCard{
+		{Position: 1, Context: "Current Situation"},
+		{Position: 2, Context: "Challenges"},
+		{Position: 3, Context: "Strengths"},
+		{Position: 4, Context: "What to Focus On"},
+		{Position: 5, Context: "Past Energy"},
+		{Position: 6, Context: "Near Future"},
+		{Position: 7, Context: "Advice"},
+		{Position: 8, Context: "External Influences"},
+		{Position: 9, Context: "Hopes and Fears"},
+		{Position: 10, Context: "Likely Outcome"},
+	},
+}
 
-	drawnCards := DrawCards(10)
+func ReadSpread(s Spread) []SpreadCard {
+	reading := make([]SpreadCard, s.Length)
+	copy(reading, s.Template)
+
+	drawnCards := DrawCards(s.Length)
 
 	for i, j := range drawnCards {
 		reading[i].Card = j
@@ -38,7 +58,7 @@ func ReadCelticCross() []Spread {
 	return reading
 }
 
-func FormatCelticCross(spread []Spread, ss astrology.StarSign) {
+func FormatReading(spread Spread, reading []SpreadCard, ss astrology.StarSign) {
 	starSignString := ss.Name
 
 	if ss.Name == "" {
@@ -47,10 +67,12 @@ func FormatCelticCross(spread []Spread, ss astrology.StarSign) {
 	}
 
 	fmt.Println("----------------------------------------------------------")
-	fmt.Printf("Here is your Celtic Cross reading, %s\n", starSignString)
+	fmt.Printf("Here is your %s reading, %s\n", spread.Name, starSignString)
 	fmt.Println("----------------------------------------------------------")
 
-	for _, position := range spread {
+	for _, position := range reading {
 		fmt.Printf("%2d. %-35s -> %s\n", position.Position, position.Context, position.Card.Name)
 	}
+
+	fmt.Println("")
 }

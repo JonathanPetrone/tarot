@@ -8,14 +8,14 @@ import (
 // rand.Seed() If I want predicability for testing
 
 func main() {
-	// drawnCards := tarot.DrawCards(1)
-
-	/*for _, card := range drawnCards {
-		fmt.Println(card.Name)
-	} */
-
 	aries := astrology.StarSigns[0]
-	spread := tarot.ReadCelticCross()
+	spread := tarot.ReadSpread(tarot.CelticCross)
+	spread2 := tarot.ReadSpread(tarot.PastPresentFuture)
 
-	tarot.FormatCelticCross(spread, aries)
+	tarot.FormatReading(tarot.CelticCross, spread, aries)
+	tarot.FormatReading(tarot.PastPresentFuture, spread2, aries)
+
+	stats := tarot.Stats{}
+	tarot.AnalyzeSpreadTarot(spread, &stats)
+	stats.Print()
 }
