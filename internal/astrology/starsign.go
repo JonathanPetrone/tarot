@@ -22,7 +22,7 @@ type StarSign struct {
 	Name    string
 	Element Element
 	Planet  string
-	From    time.Time // You can convert to time.Time if needed
+	From    time.Time
 	To      time.Time
 }
 
@@ -42,20 +42,14 @@ var StarSigns = []StarSign{
 }
 
 func parseDate(date string) time.Time {
-	// Layout format that corresponds to the "Month Day" format (e.g., "March 21")
-	layout := "January 2"
-
-	// Use the current year for parsing
+	layout := "January 2 2006"
 	year := time.Now().Year()
-
-	// Combine the date with the current year
 	fullDate := fmt.Sprintf("%s %d", date, year)
 
-	// Parse the date string
 	t, err := time.Parse(layout, fullDate)
 	if err != nil {
 		fmt.Println("Error parsing date:", err)
-		return time.Time{} // Return zero value if there's an error
+		return time.Time{}
 	}
 	return t
 }

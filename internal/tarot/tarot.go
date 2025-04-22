@@ -38,6 +38,28 @@ func (r Rank) String() string {
 	return [...]string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Page", "Knight", "Queen", "King"}[r-1]
 }
 
+type RankMeaning struct {
+	Rank    Rank
+	Meaning string
+}
+
+var RankMeanings = map[Rank]string{
+	Ace:    "Beginnings, potential, inspiration",
+	Two:    "Balance, duality, partnership",
+	Three:  "Growth, creativity, groups",
+	Four:   "Stability, foundation, structure",
+	Five:   "Conflict, challenge, change",
+	Six:    "Harmony, cooperation, adjustment",
+	Seven:  "Assessment, reflection, faith",
+	Eight:  "Movement, mastery, action",
+	Nine:   "Fruition, attainment, nearing completion",
+	Ten:    "Completion, culmination, legacy",
+	Page:   "Curiosity, messages, learning",
+	Knight: "Action, pursuit, energy",
+	Queen:  "Nurturing, insight, maturity",
+	King:   "Authority, leadership, control",
+}
+
 var Deck = []TarotCard{
 	// Major Arcana
 	{"The Fool", 0, "Major", "", "", "Uranus", "Air", 0},
