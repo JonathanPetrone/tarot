@@ -31,6 +31,7 @@ func main() {
 
 	mux.Handle("GET /templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("templates"))))
 	mux.Handle("GET /", http.HandlerFunc(server.ServeStart))
+	mux.Handle("GET /reading", http.HandlerFunc(server.ServeReading))
 
 	httpServer := &http.Server{
 		Handler: mux,
