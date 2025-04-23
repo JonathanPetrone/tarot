@@ -10,18 +10,23 @@
 <body class="font-sans bg-cover bg-center bg-local min-h-screen" style="background-image: url('/templates/assets/background.png');">
   <div class="flex flex-row min-h-screen">
     <div class="rounded-2xl bg-stone-950 bg-opacity-50 w-64 m-2 flex flex-col items-center p-4">
-      <header class="w-full flex justify-center mb-4">
-        <h1 class="text-4xl font-mono text-white text-left ml-0">{{.Title}}</h1>
-      </header>
+        <header class="w-full flex flex-col items-center mb-4">
+            <h1 class="text-4xl font-mono text-white text-left ml-0">{{.Title}}</h1>
+            <img src="/templates/assets/aries.png" alt="Aries Logo" class="w-16 h-16 mt-2" />
+        </header>
       <a class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Readings</a>
       <a class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Numerology Calc.</a>
     </div>
 
-    <div class="rounded-2xl bg-slate-100 bg-opacity-10 m-2 flex-grow flex flex-col p-4">
+    <div class="rounded-2xl bg-slate-100 bg-opacity-10 m-2 flex-grow flex flex-col p-4 justify-between">
         <h2 class="text-white text-2xl text-center">API result:</h2>
-        <div id="dynamic-content">
-        
-            </div>
+        <div class="text-slate-50" id="dynamic-content">
+        </div>
+        <div class="text-blue-300 text-center">
+        <a hx-get="/reading?type=celticcross" hx-target="#dynamic-content">Celtic Cross</a>
+        <span class="ml-2 mr-2"> | </span>
+        <a hx-get="/reading?type=threecard" hx-target="#dynamic-content">Past, Present and Future</a>
+        </div>
     </div>
 </body>
 </html>

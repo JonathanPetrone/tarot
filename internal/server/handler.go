@@ -1,13 +1,26 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
+
+	"github.com/jonathanpetrone/aitarot/internal/tarot"
 )
 
 var Tmpl *template.Template
 var DynamicContentTmpl *template.Template
+
+func init() {
+	// Initialize the dynamic content template on server startup
+	var err error
+	DynamicContentTmpl, err = template.ParseFiles("templates/dynamic_content.html")
+	if err != nil {
+		fmt.Println("Error parsing dynamic_content.html:", err)
+		// Handle the error appropriately, maybe panic in production
+	}
+}
 
 func ServeStart(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
@@ -16,30 +29,31 @@ func ServeStart(w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeReading(w http.ResponseWriter, r *http.Request) {
-	spreadType := r.URL.Query().Get("type") // Get the value of the 'type' query parameter
+	spreadType := r.URL.Query().Get("type")
+
+	var spread []tarot.SpreadCard
+	var err error
 
 	switch spreadType {
 	case "celticcross":
-		// In a real application, you'd fetch the Celtic Cross reading data
-		readingData := struct{ Result string }{Result: "Displaying the Celtic Cross reading..."}
-		// Execute the dynamic_content.html template with the reading data
-		err := DynamicContentTmpl.Execute(w, readingData)
-		if err != nil {
-			http.Error(w, "Error executing dynamic_content.html template", http.StatusInternalServerError)
-			fmt.Println("Error executing dynamic_content.html template:", err)
-			return
-		}
+		spread = tarot.ReadSpread(tarot.CelticCross)
 	case "threecard":
-		// In a real application, you'd fetch the Three Card reading data
-		readingData := struct{ Result string }{Result: "Displaying the Three Card reading..."}
-		// Execute the dynamic_content.html template with the reading data
-		err := DynamicContentTmpl.Execute(w, readingData)
-		if err != nil {
-			http.Error(w, "Error executing dynamic_content.html template", http.StatusInternalServerError)
-			fmt.Println("Error executing dynamic_content.html template:", err)
-			return
-		}
+		spread = tarot.ReadSpread(tarot.PastPresentFuture)
 	default:
 		http.Error(w, "Invalid reading type specified", http.StatusBadRequest)
+		return
 	}
+
+	// Marshal the spread data into JSON
+	jsonData, err := json.MarshalIndent(spread, "", "  ") // Use MarshalIndent for pretty printing
+	if err != nil {
+		http.Error(w, "Error encoding JSON", http.StatusInternalServerError)
+		return
+	}
+
+	// Set the Content-Type header to application/json
+	w.Header().Set("Content-Type", "application/json")
+
+	// Write the JSON data to the ResponseWriter
+	w.Write(jsonData)
 }
