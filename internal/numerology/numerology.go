@@ -29,3 +29,19 @@ var NumberMeaning = []Numbers{
 	{20, "Cooperation, balance, and mediation—acting as a peacemaker."},
 	{21, "Optimism, creativity, and the ability to uplift and inspire others. It combines the creative energies of 2 and 1."},
 }
+
+// add calculator for:
+
+/*
+
+Master Numbers (11, 22, 33): These are considered powerful and have additional meanings beyond the single-digit numbers. They are often associated with heightened spiritual awareness or potential and are treated with special importance.
+
+Life Path Number: This is one of the most significant numbers in numerology and is calculated from your birthdate. It gives insights into your life's purpose, strengths, and challenges.
+
+Destiny (Expression) Number: Derived from the full name at birth, this number reveals your talents, abilities, and potential.
+
+Soul Urge (Heart's Desire) Number: This number is derived from the vowels in your full birth name and reveals your inner desires and motivations.
+
+Personality Number: Calculated from the consonants in your name, this number represents how others perceive you.
+
+*/

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AI Tarot</title>
+        <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="font-sans bg-cover bg-center bg-local min-h-screen flex flex-col" style="background-image: url('/templates/assets/background.png');">
+        <div class="rounded-2xl bg-stone-950 bg-opacity-50 max-w-64 mx-2 mt-2 flex flex-col items-center p-4 flex-grow mb-2">
+            <header class="w-full flex justify-center mb-4">
+                <h1 class="text-4xl font-mono text-white text-left ml-0">{{.Title}}</h1>
+            </header>
+            <a class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100">Readings</a>
+            <a class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100">Numerology Calc.</a>
+        </div>
+    </body>
+</html>
