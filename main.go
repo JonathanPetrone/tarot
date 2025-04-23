@@ -25,7 +25,7 @@ func tarotSpreads() {
 }
 
 func main() {
-	serverAddr := ":8080"
+	serverAddr := ":8081"
 	log.Printf("Starting server at port %s", serverAddr)
 	mux := http.NewServeMux()
 
