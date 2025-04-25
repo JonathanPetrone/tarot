@@ -27,12 +27,17 @@ func tarotSpreads() {
 func main() {
 	serverAddr := ":8081"
 	log.Printf("Starting server at port %s", serverAddr)
+
 	mux := http.NewServeMux()
 
-	mux.Handle("GET /templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("templates"))))
-	mux.Handle("GET /", http.HandlerFunc(server.ServeStart))
-	mux.Handle("GET /reading", http.HandlerFunc(server.ServeReading))
-	mux.Handle("GET /readings", http.HandlerFunc(server.ZodiacGridHandler))
+	// Serve static assets (must come first and be more specific)
+	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("templates/assets"))))
+
+	// Dynamic routes
+	mux.HandleFunc("/reading", server.ServeReading)
+	mux.HandleFunc("/readings", server.ZodiacGridHandler)
+	mux.HandleFunc("/", server.ServeStart) // Generic fallback
+	mux.HandleFunc("/home", server.ServeHome)
 
 	httpServer := &http.Server{
 		Handler: mux,

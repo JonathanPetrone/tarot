@@ -10,6 +10,7 @@ import (
 )
 
 var Tmpl *template.Template
+var ZodiacTmpl *template.Template
 var DynamicContentTmpl *template.Template
 
 func init() {
@@ -20,6 +21,11 @@ func init() {
 		fmt.Println("Error parsing dynamic_content.html:", err)
 		// Handle the error appropriately, maybe panic in production
 	}
+	ZodiacTmpl, err = template.ParseFiles("templates/zodiac_signs.html")
+	if err != nil {
+		fmt.Println("Error parsing zodiac_signs.html:", err)
+		// Handle the error appropriately, maybe panic in production
+	}
 }
 
 func ServeStart(w http.ResponseWriter, r *http.Request) {
@@ -28,8 +34,13 @@ func ServeStart(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, data)
 }
 
+func ServeHome(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/welcome.html"))
+	tmpl.Execute(w, nil)
+}
+
 func ZodiacGridHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/zodiac-grid.html"))
+	tmpl := template.Must(template.ParseFiles("templates/zodiac_signs.html"))
 	tmpl.Execute(w, nil)
 }
 
