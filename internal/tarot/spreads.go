@@ -58,7 +58,7 @@ func ReadSpread(s Spread) []SpreadCard {
 	return reading
 }
 
-func FormatReading(spread Spread, reading []SpreadCard, ss astrology.StarSign) {
+func FormatReading(spread Spread, reading []SpreadCard, ss astrology.StarSign, aiOutput bool) {
 	starSignString := ss.Name
 
 	if ss.Name == "" {

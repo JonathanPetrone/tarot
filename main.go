@@ -16,8 +16,8 @@ func tarotSpreads() {
 	spread := tarot.ReadSpread(tarot.CelticCross)
 	spread2 := tarot.ReadSpread(tarot.PastPresentFuture)
 
-	tarot.FormatReading(tarot.CelticCross, spread, aries)
-	tarot.FormatReading(tarot.PastPresentFuture, spread2, aries)
+	tarot.FormatReading(tarot.CelticCross, spread, aries, true)
+	tarot.FormatReading(tarot.PastPresentFuture, spread2, aries, true)
 
 	stats := tarot.Stats{}
 	tarot.AnalyzeSpreadTarot(spread, &stats)
@@ -32,6 +32,7 @@ func main() {
 	mux.Handle("GET /templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("templates"))))
 	mux.Handle("GET /", http.HandlerFunc(server.ServeStart))
 	mux.Handle("GET /reading", http.HandlerFunc(server.ServeReading))
+	mux.Handle("GET /readings", http.HandlerFunc(server.ZodiacGridHandler))
 
 	httpServer := &http.Server{
 		Handler: mux,
