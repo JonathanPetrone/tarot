@@ -2,6 +2,7 @@ package tarot
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/jonathanpetrone/aitarot/internal/astrology"
 )
@@ -58,21 +59,16 @@ func ReadSpread(s Spread) []SpreadCard {
 	return reading
 }
 
-func FormatReading(spread Spread, reading []SpreadCard, ss astrology.StarSign, aiOutput bool) {
-	starSignString := ss.Name
+func FormatReading(spread Spread, reading []SpreadCard, ss astrology.StarSign, aiOutput bool) string {
+	var b strings.Builder
 
-	if ss.Name == "" {
-		fmt.Println("The recipient has not provided their star sign.")
-		starSignString = "(You did not provide a star sign)"
-	}
-
-	fmt.Println("----------------------------------------------------------")
-	fmt.Printf("Here is your %s reading, %s\n", spread.Name, starSignString)
-	fmt.Println("----------------------------------------------------------")
+	b.WriteString(`<div class="p-8">`)
+	b.WriteString(fmt.Sprintf(`<h2 class="text-white text-3xl mb-4">%s Reading</h2>`, ss.Name))
 
 	for _, position := range reading {
-		fmt.Printf("%2d. %-35s -> %s\n", position.Position, position.Context, position.Card.Name)
+		b.WriteString(fmt.Sprintf(`<p class="text-white">%2d. %-35s -> %s</p>`, position.Position, position.Context, position.Card.Name))
 	}
 
-	fmt.Println("")
+	b.WriteString(`</div>`)
+	return b.String()
 }

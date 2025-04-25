@@ -41,6 +41,14 @@ var StarSigns = []StarSign{
 	{"Pisces", Water, "Neptune", parseDate("February 19"), parseDate("March 20")},
 }
 
+var StarSignMap = map[string]StarSign{}
+
+func init() {
+	for _, sign := range StarSigns {
+		StarSignMap[sign.Name] = sign
+	}
+}
+
 func parseDate(date string) time.Time {
 	layout := "January 2 2006"
 	year := time.Now().Year()

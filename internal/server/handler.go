@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"net/http"
 
+	"github.com/jonathanpetrone/aitarot/internal/astrology"
 	"github.com/jonathanpetrone/aitarot/internal/tarot"
 )
 
@@ -45,6 +46,28 @@ func ZodiacGridHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeReading(w http.ResponseWriter, r *http.Request) {
+	starSignString := r.URL.Query().Get("type")
+
+	// Validate starsign first
+	sign, ok := astrology.StarSignMap[starSignString]
+	if !ok {
+		http.Error(w, "Error: unknown star sign", http.StatusBadRequest)
+		return
+	}
+
+	// Generate the spread
+	spread := tarot.ReadSpread(tarot.CelticCross)
+
+	// Format the reading
+	reading := tarot.FormatReading(tarot.CelticCross, spread, sign, true)
+
+	// Send the reading back
+	w.Header().Set("Content-Type", "text/html")
+	w.Write([]byte(reading))
+	fmt.Println(starSignString)
+}
+
+func ServeReadingJSON(w http.ResponseWriter, r *http.Request) {
 	spreadType := r.URL.Query().Get("type")
 
 	var spread []tarot.SpreadCard
