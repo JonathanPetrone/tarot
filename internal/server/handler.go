@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"net/http"
 
+	aihandler "github.com/jonathanpetrone/aitarot/internal/ai-handler"
 	"github.com/jonathanpetrone/aitarot/internal/astrology"
 	"github.com/jonathanpetrone/aitarot/internal/tarot"
 )
@@ -17,11 +18,6 @@ var DynamicContentTmpl *template.Template
 func init() {
 	// Initialize the dynamic content template on server startup
 	var err error
-	DynamicContentTmpl, err = template.ParseFiles("templates/dynamic_content.html")
-	if err != nil {
-		fmt.Println("Error parsing dynamic_content.html:", err)
-		// Handle the error appropriately, maybe panic in production
-	}
 	ZodiacTmpl, err = template.ParseFiles("templates/zodiac_signs.html")
 	if err != nil {
 		fmt.Println("Error parsing zodiac_signs.html:", err)
@@ -97,7 +93,27 @@ func ServeReadingJSON(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonData)
 }
 
+func add(a, b int) int {
+	return a + b
+}
+
 func ServeExample(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/reading.html"))
-	tmpl.Execute(w, nil)
+	reading, err := aihandler.ParseMonthlyReading("input/reading.txt")
+	if err != nil {
+		http.Error(w, "Failed to load reading: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	tmpl := template.Must(
+		template.New("dynamic_content.html").
+			Funcs(template.FuncMap{
+				"add": add,
+			}).
+			ParseFiles("templates/dynamic_content.html"),
+	)
+
+	err = tmpl.ExecuteTemplate(w, "dynamic_content.html", reading)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
