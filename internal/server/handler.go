@@ -96,3 +96,8 @@ func ServeReadingJSON(w http.ResponseWriter, r *http.Request) {
 	// Write the JSON data to the ResponseWriter
 	w.Write(jsonData)
 }
+
+func ServeExample(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/reading.html"))
+	tmpl.Execute(w, nil)
+}

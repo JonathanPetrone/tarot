@@ -38,6 +38,7 @@ func main() {
 	mux.HandleFunc("/readings", server.ZodiacGridHandler)
 	mux.HandleFunc("/", server.ServeStart) // Generic fallback
 	mux.HandleFunc("/home", server.ServeHome)
+	mux.HandleFunc("/example", server.ServeExample)
 
 	httpServer := &http.Server{
 		Handler: mux,
