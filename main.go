@@ -6,6 +6,8 @@ import (
 	"net/http"
 
 	aihandler "github.com/jonathanpetrone/aitarot/internal/ai-handler"
+	"github.com/jonathanpetrone/aitarot/internal/astrology"
+	"github.com/jonathanpetrone/aitarot/internal/readings"
 	"github.com/jonathanpetrone/aitarot/internal/server"
 )
 
@@ -19,6 +21,11 @@ func main() {
 	if err != nil {
 		fmt.Println("Error parsing reading:", err)
 		return
+	}
+
+	for i := range astrology.StarSigns {
+		reading := readings.CreateReading(2025, "May", astrology.StarSigns[i].Name)
+		readings.FormatReadingForAI(reading)
 	}
 
 	mux := http.NewServeMux()

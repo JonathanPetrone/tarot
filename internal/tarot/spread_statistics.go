@@ -3,6 +3,7 @@ package tarot
 import (
 	"fmt"
 	"reflect"
+	"strings"
 )
 
 type Stats struct {
@@ -106,4 +107,32 @@ func (s Stats) Print() {
 			}
 		}
 	}
+}
+
+func (s Stats) String() string {
+	var sb strings.Builder
+
+	sb.WriteString("\nStatistics: \n-------------\n")
+	sb.WriteString(fmt.Sprintf("Major Arcana Cards: %d\nMinor Arcana Cards: %d\n", s.Major, s.Minor))
+	sb.WriteString(fmt.Sprintf("Cups: %d\nPentacles: %d\nSwords: %d\nWands: %d\n", s.Cups, s.Pentacles, s.Swords, s.Wands))
+
+	// Get the type of the Stats struct
+	val := reflect.ValueOf(s)
+	typeOfStats := val.Type()
+
+	// Iterate through the struct fields to find those from Aces to Kings
+	for i := 0; i < val.NumField(); i++ {
+		field := val.Field(i)
+		fieldName := typeOfStats.Field(i).Name
+
+		// Only add to string if field is from Aces to Kings and has a value greater than 0
+		switch fieldName {
+		case "Aces", "Twos", "Threes", "Fours", "Fives", "Sixes", "Sevens", "Eights", "Nines", "Tens", "Pages", "Knights", "Queens", "Kings":
+			if field.Int() > 0 {
+				sb.WriteString(fmt.Sprintf("%s: %d\n", fieldName, field.Int()))
+			}
+		}
+	}
+
+	return sb.String()
 }
