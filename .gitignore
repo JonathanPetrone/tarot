@@ -1,0 +1,21 @@
+# Environment files
+.env
+**/.env
+
+# Generated tarot readings (text input prompts)
+monthlyreadings/**/ *.txt
+
+# MadameAI outputs (HTML or any result files)
+MadameAI/
+
+# Optional: compiled binaries (if you build)
+*.exe
+*.out
+*.bin
+
+# macOS noise
+.DS_Store
+
+# Logs or temp
+*.log
+tmp/
