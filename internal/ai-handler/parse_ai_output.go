@@ -6,17 +6,6 @@ import (
 	"strings"
 )
 
-type MonthlyReading struct {
-	Summary       string
-	Cards         []Card
-	FinalWhispers string
-}
-
-type Card struct {
-	Title       string
-	Description string
-}
-
 func ParseMonthlyReading(filepath string) (MonthlyReading, error) {
 	var reading MonthlyReading
 
