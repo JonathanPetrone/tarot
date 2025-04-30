@@ -1,27 +1,28 @@
 Aries Monthly Reading for May 2025
 
- 1. Current Situation                   -> Six of Swords
- 2. Challenges                          -> Seven of Pentacles
- 3. Strengths                           -> Four of Wands
- 4. What to Focus On                    -> The Empress
- 5. Past Energy                         -> The Star
- 6. Near Future                         -> Three of Wands
- 7. Advice                              -> The World
- 8. External Influences                 -> Death
- 9. Hopes and Fears                     -> Justice
-10. Likely Outcome                      -> Two of Pentacles
+ 1. Current Situation                   -> Strength
+ 2. Challenges                          -> Seven of Cups
+ 3. Strengths                           -> Queen of Cups
+ 4. What to Focus On                    -> Five of Pentacles
+ 5. Past Energy                         -> Queen of Wands
+ 6. Near Future                         -> The Magician
+ 7. Advice                              -> King of Pentacles
+ 8. External Influences                 -> Six of Cups
+ 9. Hopes and Fears                     -> Seven of Pentacles
+10. Likely Outcome                      -> Ace of Cups
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 5
-Minor Arcana Cards: 5
-Cups: 0
-Pentacles: 2
-Swords: 1
-Wands: 2
-Twos: 1
-Threes: 1
-Fours: 1
+Major Arcana Cards: 2
+Minor Arcana Cards: 8
+Cups: 4
+Pentacles: 3
+Swords: 0
+Wands: 1
+Aces: 1
+Fives: 1
 Sixes: 1
-Sevens: 1
+Sevens: 2
+Queens: 2
+Kings: 1

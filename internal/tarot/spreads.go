@@ -1,12 +1,5 @@
 package tarot
 
-import (
-	"fmt"
-	"strings"
-
-	"github.com/jonathanpetrone/aitarot/internal/astrology"
-)
-
 type Spread struct {
 	Name     string
 	Length   int
@@ -57,18 +50,4 @@ func ReadSpread(s Spread) []SpreadCard {
 	}
 
 	return reading
-}
-
-func FormatReading(spread Spread, reading []SpreadCard, ss astrology.StarSign, aiOutput bool) string {
-	var b strings.Builder
-
-	b.WriteString(`<div class="p-8">`)
-	b.WriteString(fmt.Sprintf(`<h2 class="text-white text-3xl mb-4">%s Reading</h2>`, ss.Name))
-
-	for _, position := range reading {
-		b.WriteString(fmt.Sprintf(`<p class="text-white">%2d. %-35s -> %s</p>`, position.Position, position.Context, position.Card.Name))
-	}
-
-	b.WriteString(`</div>`)
-	return b.String()
 }

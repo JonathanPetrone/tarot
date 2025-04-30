@@ -1,6 +1,7 @@
 package readings
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -11,65 +12,64 @@ import (
 )
 
 type Reading struct {
-	Year   int
+	Year   string
 	Month  string
-	Zodiac astrology.StarSign
+	Zodiac astrology.Zodiac
 	Cards  []tarot.SpreadCard
 }
 
-func CreateReading(year int, month string, zodiac string) Reading {
-	reading := Reading{
+func CreateReading(year string, month string, zodiac string) Reading {
+	return Reading{
 		Year:   year,
 		Month:  month,
-		Zodiac: astrology.StarSignMap[zodiac],
+		Zodiac: astrology.ZodiacSignMap[zodiac],
 		Cards:  tarot.ReadSpread(tarot.CelticCross),
 	}
-
-	return reading
 }
 
 func FormatReadingForAI(r Reading) error {
-	// Build the content
-	var sb strings.Builder
-
-	// Meta info
-	metaReading := fmt.Sprintf("%v Monthly Reading for %s %d\n", r.Zodiac.Name, r.Month, r.Year)
-	sb.WriteString(metaReading + "\n")
-
-	// Cards drawn
-	for _, position := range r.Cards {
-		card := fmt.Sprintf("%2d. %-35s -> %s\n", position.Position, position.Context, position.Card.Name)
-		sb.WriteString(card)
+	// Validate required inputs
+	if r.Zodiac.Name == "" {
+		return errors.New("must provide a zodiac sign")
+	}
+	if r.Month == "" {
+		return errors.New("must provide a month for the reading")
+	}
+	if r.Year == "" {
+		return errors.New("must provide a year for the reading")
 	}
 
+	// Build reading text
+	var sb strings.Builder
+	sb.WriteString(fmt.Sprintf("%s Monthly Reading for %s %s\n\n", r.Zodiac.Name, r.Month, r.Year))
+
+	for _, position := range r.Cards {
+		sb.WriteString(fmt.Sprintf("%2d. %-35s -> %s\n", position.Position, position.Context, position.Card.Name))
+	}
 	sb.WriteString("\n")
 
-	// Analyze and add stats
 	stats := tarot.Stats{}
 	tarot.AnalyzeSpreadTarot(r.Cards, &stats)
-	statsString := stats.String()
-	sb.WriteString(statsString)
+	sb.WriteString(stats.String())
 
-	// Final content as string
+	// Final content
 	content := sb.String()
 
-	// Build file path
-	dirPath := fmt.Sprintf("./monthlyreadings/%d/%s", r.Year, r.Month)
-	fileName := fmt.Sprintf("%s_%d.txt", strings.ToLower(r.Zodiac.Name), r.Year)
+	// Construct file path
+	dirPath := filepath.Join("/Users/jonathanpetrone/Github/AITarot/monthlyreadings", r.Year, strings.ToLower(r.Month))
+	fileName := fmt.Sprintf("%s_%s.txt", strings.ToLower(r.Zodiac.Name), r.Year)
 	fullPath := filepath.Join(dirPath, fileName)
 
-	// Create directory if it doesn't exist
-	err := os.MkdirAll(dirPath, 0755)
-	if err != nil {
-		return fmt.Errorf("failed creating directory: %w", err)
+	// Create directory
+	if err := os.MkdirAll(dirPath, 0755); err != nil {
+		return fmt.Errorf("failed to create directory: %w", err)
 	}
 
 	// Write file
-	err = os.WriteFile(fullPath, []byte(content), 0644)
-	if err != nil {
-		return fmt.Errorf("failed writing file: %w", err)
+	if err := os.WriteFile(fullPath, []byte(content), 0644); err != nil {
+		return fmt.Errorf("failed to write file: %w", err)
 	}
 
-	fmt.Println("Saved reading to", fullPath)
+	fmt.Println("✅ Saved reading to", fullPath)
 	return nil
 }

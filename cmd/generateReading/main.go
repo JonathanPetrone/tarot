@@ -11,18 +11,25 @@ import (
 )
 
 func main() {
-	// Expect: go run main.go 2025 May
-	if len(os.Args) < 3 {
-		log.Fatalf("Usage: %s <year> <month>", os.Args[0])
+	if len(os.Args) != 3 {
+		fmt.Printf("Usage: %s <year> <month>\n", os.Args[0])
+		os.Exit(1)
 	}
 
 	year := os.Args[1]
 	month := strings.ToLower(os.Args[2])
 
-	fmt.Printf("Generating readings for %s, %s...\n", month, year)
+	if year == "" || month == "" {
+		log.Fatal("❌ Both <year> and <month> must be provided.")
+	}
+
+	fmt.Printf("🔮 Generating readings for %s %s...\n", month, year)
 
 	for _, sign := range astrology.ZodiacSigns {
 		reading := readings.CreateReading(year, month, sign.Name)
-		readings.FormatReadingForAI(reading)
+		err := readings.FormatReadingForAI(reading)
+		if err != nil {
+			log.Printf("⚠️ Failed to save reading for %s: %v", sign.Name, err)
+		}
 	}
 }

@@ -1,26 +1,31 @@
 Virgo Monthly Reading for May 2025
 
- 1. Current Situation                   -> The Hanged Man
- 2. Challenges                          -> Two of Swords
- 3. Strengths                           -> The Star
- 4. What to Focus On                    -> The Hierophant
- 5. Past Energy                         -> Death
- 6. Near Future                         -> King of Cups
- 7. Advice                              -> Queen of Pentacles
- 8. External Influences                 -> The World
- 9. Hopes and Fears                     -> Knight of Swords
-10. Likely Outcome                      -> Temperance
+ 1. Current Situation                   -> Queen of Swords
+ 2. Challenges                          -> Nine of Pentacles
+ 3. Strengths                           -> Four of Pentacles
+ 4. What to Focus On                    -> Six of Cups
+ 5. Past Energy                         -> Ten of Cups
+ 6. Near Future                         -> Seven of Wands
+ 7. Advice                              -> Three of Cups
+ 8. External Influences                 -> Ace of Swords
+ 9. Hopes and Fears                     -> Ten of Swords
+10. Likely Outcome                      -> Five of Pentacles
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 6
-Minor Arcana Cards: 4
-Cups: 1
-Pentacles: 1
-Swords: 2
-Wands: 0
-Twos: 1
-Knights: 1
+Major Arcana Cards: 0
+Minor Arcana Cards: 10
+Cups: 3
+Pentacles: 3
+Swords: 3
+Wands: 1
+Aces: 1
+Threes: 1
+Fours: 1
+Fives: 1
+Sixes: 1
+Sevens: 1
+Nines: 1
+Tens: 2
 Queens: 1
-Kings: 1

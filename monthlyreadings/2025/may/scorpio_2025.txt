@@ -1,28 +1,27 @@
 Scorpio Monthly Reading for May 2025
 
- 1. Current Situation                   -> Four of Cups
- 2. Challenges                          -> Ten of Swords
- 3. Strengths                           -> Justice
- 4. What to Focus On                    -> Ace of Cups
- 5. Past Energy                         -> The Fool
- 6. Near Future                         -> Five of Pentacles
- 7. Advice                              -> Death
- 8. External Influences                 -> Six of Pentacles
- 9. Hopes and Fears                     -> Page of Swords
-10. Likely Outcome                      -> The Hanged Man
+ 1. Current Situation                   -> The Emperor
+ 2. Challenges                          -> The Fool
+ 3. Strengths                           -> The Star
+ 4. What to Focus On                    -> Three of Cups
+ 5. Past Energy                         -> The Sun
+ 6. Near Future                         -> Ten of Pentacles
+ 7. Advice                              -> Eight of Cups
+ 8. External Influences                 -> Three of Swords
+ 9. Hopes and Fears                     -> Knight of Wands
+10. Likely Outcome                      -> Queen of Cups
 
 
 Statistics: 
 -------------
 Major Arcana Cards: 4
 Minor Arcana Cards: 6
-Cups: 2
-Pentacles: 2
-Swords: 2
-Wands: 0
-Aces: 1
-Fours: 1
-Fives: 1
-Sixes: 1
+Cups: 3
+Pentacles: 1
+Swords: 1
+Wands: 1
+Threes: 2
+Eights: 1
 Tens: 1
-Pages: 1
+Knights: 1
+Queens: 1

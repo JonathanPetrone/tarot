@@ -1,28 +1,28 @@
 Libra Monthly Reading for May 2025
 
- 1. Current Situation                   -> Queen of Pentacles
- 2. Challenges                          -> Nine of Wands
- 3. Strengths                           -> Four of Cups
- 4. What to Focus On                    -> Two of Pentacles
- 5. Past Energy                         -> Four of Wands
- 6. Near Future                         -> King of Cups
- 7. Advice                              -> The Chariot
- 8. External Influences                 -> Nine of Cups
- 9. Hopes and Fears                     -> The Sun
-10. Likely Outcome                      -> Knight of Pentacles
+ 1. Current Situation                   -> Page of Cups
+ 2. Challenges                          -> Five of Pentacles
+ 3. Strengths                           -> Queen of Cups
+ 4. What to Focus On                    -> Ten of Swords
+ 5. Past Energy                         -> The Emperor
+ 6. Near Future                         -> Two of Swords
+ 7. Advice                              -> Death
+ 8. External Influences                 -> Three of Cups
+ 9. Hopes and Fears                     -> Judgement
+10. Likely Outcome                      -> The Hanged Man
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 2
-Minor Arcana Cards: 8
+Major Arcana Cards: 4
+Minor Arcana Cards: 6
 Cups: 3
-Pentacles: 3
-Swords: 0
-Wands: 2
+Pentacles: 1
+Swords: 2
+Wands: 0
 Twos: 1
-Fours: 2
-Nines: 2
-Knights: 1
+Threes: 1
+Fives: 1
+Tens: 1
+Pages: 1
 Queens: 1
-Kings: 1

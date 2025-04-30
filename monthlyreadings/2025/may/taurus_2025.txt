@@ -1,27 +1,29 @@
 Taurus Monthly Reading for May 2025
 
- 1. Current Situation                   -> The Magician
- 2. Challenges                          -> Page of Swords
- 3. Strengths                           -> Temperance
- 4. What to Focus On                    -> The Emperor
- 5. Past Energy                         -> Nine of Cups
- 6. Near Future                         -> The Chariot
- 7. Advice                              -> Four of Pentacles
- 8. External Influences                 -> Five of Cups
- 9. Hopes and Fears                     -> Wheel of Fortune
-10. Likely Outcome                      -> Six of Swords
+ 1. Current Situation                   -> Two of Wands
+ 2. Challenges                          -> Four of Wands
+ 3. Strengths                           -> Eight of Swords
+ 4. What to Focus On                    -> Three of Pentacles
+ 5. Past Energy                         -> King of Cups
+ 6. Near Future                         -> Ten of Pentacles
+ 7. Advice                              -> Two of Pentacles
+ 8. External Influences                 -> The Magician
+ 9. Hopes and Fears                     -> Five of Cups
+10. Likely Outcome                      -> Ten of Wands
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 5
-Minor Arcana Cards: 5
+Major Arcana Cards: 1
+Minor Arcana Cards: 9
 Cups: 2
-Pentacles: 1
-Swords: 2
-Wands: 0
+Pentacles: 3
+Swords: 1
+Wands: 3
+Twos: 2
+Threes: 1
 Fours: 1
 Fives: 1
-Sixes: 1
-Nines: 1
-Pages: 1
+Eights: 1
+Tens: 2
+Kings: 1

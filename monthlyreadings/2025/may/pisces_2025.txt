@@ -1,27 +1,29 @@
 Pisces Monthly Reading for May 2025
 
- 1. Current Situation                   -> Seven of Cups
- 2. Challenges                          -> Wheel of Fortune
- 3. Strengths                           -> Ten of Cups
- 4. What to Focus On                    -> The Tower
- 5. Past Energy                         -> The High Priestess
- 6. Near Future                         -> King of Swords
- 7. Advice                              -> Page of Swords
- 8. External Influences                 -> Eight of Wands
- 9. Hopes and Fears                     -> The Star
-10. Likely Outcome                      -> The Lovers
+ 1. Current Situation                   -> Nine of Pentacles
+ 2. Challenges                          -> King of Swords
+ 3. Strengths                           -> The Tower
+ 4. What to Focus On                    -> Five of Pentacles
+ 5. Past Energy                         -> King of Pentacles
+ 6. Near Future                         -> Four of Pentacles
+ 7. Advice                              -> Queen of Wands
+ 8. External Influences                 -> Eight of Cups
+ 9. Hopes and Fears                     -> The Fool
+10. Likely Outcome                      -> Page of Wands
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 5
-Minor Arcana Cards: 5
-Cups: 2
-Pentacles: 0
-Swords: 2
-Wands: 1
-Sevens: 1
+Major Arcana Cards: 2
+Minor Arcana Cards: 8
+Cups: 1
+Pentacles: 4
+Swords: 1
+Wands: 2
+Fours: 1
+Fives: 1
 Eights: 1
-Tens: 1
+Nines: 1
 Pages: 1
-Kings: 1
+Queens: 1
+Kings: 2

@@ -1,28 +1,26 @@
 Gemini Monthly Reading for May 2025
 
- 1. Current Situation                   -> Six of Wands
- 2. Challenges                          -> Knight of Pentacles
- 3. Strengths                           -> Queen of Wands
- 4. What to Focus On                    -> Ten of Swords
- 5. Past Energy                         -> Seven of Cups
- 6. Near Future                         -> Judgement
- 7. Advice                              -> The Emperor
- 8. External Influences                 -> The Fool
- 9. Hopes and Fears                     -> The Magician
-10. Likely Outcome                      -> King of Wands
+ 1. Current Situation                   -> The World
+ 2. Challenges                          -> Queen of Cups
+ 3. Strengths                           -> Seven of Cups
+ 4. What to Focus On                    -> The Star
+ 5. Past Energy                         -> Seven of Wands
+ 6. Near Future                         -> Two of Swords
+ 7. Advice                              -> Two of Cups
+ 8. External Influences                 -> Justice
+ 9. Hopes and Fears                     -> Two of Wands
+10. Likely Outcome                      -> Five of Wands
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 4
-Minor Arcana Cards: 6
-Cups: 1
-Pentacles: 1
+Major Arcana Cards: 3
+Minor Arcana Cards: 7
+Cups: 3
+Pentacles: 0
 Swords: 1
 Wands: 3
-Sixes: 1
-Sevens: 1
-Tens: 1
-Knights: 1
+Twos: 3
+Fives: 1
+Sevens: 2
 Queens: 1
-Kings: 1

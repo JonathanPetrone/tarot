@@ -85,6 +85,7 @@ func AnalyzeSpreadTarot(s []SpreadCard, stats *Stats) {
 	}
 }
 
+// console print the stats.
 func (s Stats) Print() {
 	fmt.Printf("-------Statistics-------\n")
 	fmt.Printf("Major Arcana Cards: %d\nMinor Arcana Cards: %d\n", s.Major, s.Minor)
@@ -109,6 +110,7 @@ func (s Stats) Print() {
 	}
 }
 
+// create string for use in a text file.
 func (s Stats) String() string {
 	var sb strings.Builder
 

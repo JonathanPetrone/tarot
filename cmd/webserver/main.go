@@ -5,13 +5,19 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/joho/godotenv"
 	aihandler "github.com/jonathanpetrone/aitarot/internal/ai-handler"
-	"github.com/jonathanpetrone/aitarot/internal/astrology"
-	"github.com/jonathanpetrone/aitarot/internal/readings"
 	"github.com/jonathanpetrone/aitarot/internal/server"
 )
 
 // rand.Seed() If I want predicability for testing
+
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+}
 
 func main() {
 	serverAddr := ":8081"
@@ -21,11 +27,6 @@ func main() {
 	if err != nil {
 		fmt.Println("Error parsing reading:", err)
 		return
-	}
-
-	for i := range astrology.StarSigns {
-		reading := readings.CreateReading(2025, "May", astrology.StarSigns[i].Name)
-		readings.FormatReadingForAI(reading)
 	}
 
 	mux := http.NewServeMux()

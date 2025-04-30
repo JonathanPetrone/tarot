@@ -1,14 +1,11 @@
 package server
 
 import (
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
 
 	aihandler "github.com/jonathanpetrone/aitarot/internal/ai-handler"
-	"github.com/jonathanpetrone/aitarot/internal/astrology"
-	"github.com/jonathanpetrone/aitarot/internal/tarot"
 )
 
 var Tmpl *template.Template
@@ -39,58 +36,6 @@ func ServeHome(w http.ResponseWriter, r *http.Request) {
 func ZodiacGridHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/zodiac_signs.html"))
 	tmpl.Execute(w, nil)
-}
-
-func ServeReading(w http.ResponseWriter, r *http.Request) {
-	starSignString := r.URL.Query().Get("type")
-
-	// Validate starsign first
-	sign, ok := astrology.StarSignMap[starSignString]
-	if !ok {
-		http.Error(w, "Error: unknown star sign", http.StatusBadRequest)
-		return
-	}
-
-	// Generate the spread
-	spread := tarot.ReadSpread(tarot.CelticCross)
-
-	// Format the reading
-	reading := tarot.FormatReading(tarot.CelticCross, spread, sign, true)
-
-	// Send the reading back
-	w.Header().Set("Content-Type", "text/html")
-	w.Write([]byte(reading))
-	fmt.Println(starSignString)
-}
-
-func ServeReadingJSON(w http.ResponseWriter, r *http.Request) {
-	spreadType := r.URL.Query().Get("type")
-
-	var spread []tarot.SpreadCard
-	var err error
-
-	switch spreadType {
-	case "celticcross":
-		spread = tarot.ReadSpread(tarot.CelticCross)
-	case "threecard":
-		spread = tarot.ReadSpread(tarot.PastPresentFuture)
-	default:
-		http.Error(w, "Invalid reading type specified", http.StatusBadRequest)
-		return
-	}
-
-	// Marshal the spread data into JSON
-	jsonData, err := json.MarshalIndent(spread, "", "  ") // Use MarshalIndent for pretty printing
-	if err != nil {
-		http.Error(w, "Error encoding JSON", http.StatusInternalServerError)
-		return
-	}
-
-	// Set the Content-Type header to application/json
-	w.Header().Set("Content-Type", "application/json")
-
-	// Write the JSON data to the ResponseWriter
-	w.Write(jsonData)
 }
 
 func add(a, b int) int {

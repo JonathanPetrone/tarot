@@ -18,7 +18,7 @@ func (e Element) String() string {
 	return [...]string{"Fire", "Earth", "Air", "Water"}[e]
 }
 
-type StarSign struct {
+type Zodiac struct {
 	Name    string
 	Element Element
 	Planet  string
@@ -26,7 +26,7 @@ type StarSign struct {
 	To      time.Time
 }
 
-var StarSigns = []StarSign{
+var ZodiacSigns = []Zodiac{
 	{"Aries", Fire, "Mars", parseDate("March 21"), parseDate("April 19")},
 	{"Taurus", Earth, "Venus", parseDate("April 20"), parseDate("May 20")},
 	{"Gemini", Air, "Mercury", parseDate("May 21"), parseDate("June 20")},
@@ -41,11 +41,11 @@ var StarSigns = []StarSign{
 	{"Pisces", Water, "Neptune", parseDate("February 19"), parseDate("March 20")},
 }
 
-var StarSignMap = map[string]StarSign{}
+var ZodiacSignMap = map[string]Zodiac{}
 
 func init() {
-	for _, sign := range StarSigns {
-		StarSignMap[sign.Name] = sign
+	for _, sign := range ZodiacSigns {
+		ZodiacSignMap[sign.Name] = sign
 	}
 }
 
