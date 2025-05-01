@@ -1,7 +1,28 @@
 package main
 
-import aihandler "github.com/jonathanpetrone/aitarot/internal/ai-handler"
+import (
+	"fmt"
+	"log"
+	"os"
+	"strings"
+
+	aihandler "github.com/jonathanpetrone/aitarot/internal/ai-handler"
+)
 
 func main() {
-	aihandler.MakeHTMLTemplate("aquarius", "2025", "may")
+	if len(os.Args) < 4 {
+		fmt.Printf("Usage: %s <sign> <year> <month>\n", os.Args[0])
+		os.Exit(1)
+	}
+
+	sign := strings.ToLower(os.Args[1])
+	year := os.Args[2]
+	month := strings.ToLower(os.Args[3])
+
+	if sign == "" || year == "" || month == "" {
+		log.Fatal("❌ All of <sign>, <year>, and <month> must be provided")
+	}
+
+	fmt.Printf("🔮 Generating html template for %s %s %s...\n", sign, month, year)
+	aihandler.MakeHTMLTemplate(sign, year, month)
 }

@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-
-	aihandler "github.com/jonathanpetrone/aitarot/internal/ai-handler"
+	"strings"
 )
 
 var Tmpl *template.Template
@@ -42,23 +41,31 @@ func add(a, b int) int {
 	return a + b
 }
 
-func ServeExample(w http.ResponseWriter, r *http.Request) {
-	reading, err := aihandler.ParseMonthlyReading("input/reading.txt")
-	if err != nil {
-		http.Error(w, "Failed to load reading: "+err.Error(), http.StatusInternalServerError)
+func ServeReading(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query()
+	sign := query.Get("sign")
+	year := query.Get("year")
+	month := query.Get("month")
+
+	// Validate required query parameters
+	if sign == "" || year == "" || month == "" {
+		http.Error(w, "Missing query parameters: sign, year, and month are required.", http.StatusBadRequest)
 		return
 	}
 
-	tmpl := template.Must(
-		template.New("dynamic_content.html").
-			Funcs(template.FuncMap{
-				"add": add,
-			}).
-			ParseFiles("templates/dynamic_content.html"),
-	)
+	// Build the template path
+	templateToParse := fmt.Sprintf("templates/readings/%s/%s/%s_%s_%s.html",
+		year, month, strings.ToLower(sign), year, strings.ToLower(month))
 
-	err = tmpl.ExecuteTemplate(w, "dynamic_content.html", reading)
+	// Parse and execute the template
+	tmpl, err := template.ParseFiles(templateToParse)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Template not found: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	if err := tmpl.Execute(w, nil); err != nil {
+		http.Error(w, fmt.Sprintf("Failed to render template: %v", err), http.StatusInternalServerError)
+		return
 	}
 }
