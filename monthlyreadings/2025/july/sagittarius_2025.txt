@@ -1,29 +1,28 @@
 Sagittarius Monthly Reading for july 2025
 
- 1. Current Situation                   -> Knight of Pentacles
- 2. Challenges                          -> Eight of Pentacles
- 3. Strengths                           -> Nine of Swords
- 4. What to Focus On                    -> Eight of Cups
- 5. Past Energy                         -> Nine of Wands
- 6. Near Future                         -> Two of Cups
- 7. Advice                              -> Six of Swords
- 8. External Influences                 -> Ace of Swords
- 9. Hopes and Fears                     -> Page of Wands
-10. Likely Outcome                      -> Page of Swords
+ 1. Current Situation                   -> Strength
+ 2. Challenges                          -> Judgement
+ 3. Strengths                           -> Knight of Cups
+ 4. What to Focus On                    -> Three of Swords
+ 5. Past Energy                         -> Six of Cups
+ 6. Near Future                         -> The Devil
+ 7. Advice                              -> Wheel of Fortune
+ 8. External Influences                 -> Page of Pentacles
+ 9. Hopes and Fears                     -> Five of Pentacles
+10. Likely Outcome                      -> Seven of Wands
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 0
-Minor Arcana Cards: 10
+Major Arcana Cards: 4
+Minor Arcana Cards: 6
 Cups: 2
 Pentacles: 2
-Swords: 4
-Wands: 2
-Aces: 1
-Twos: 1
+Swords: 1
+Wands: 1
+Threes: 1
+Fives: 1
 Sixes: 1
-Eights: 2
-Nines: 2
-Pages: 2
+Sevens: 1
+Pages: 1
 Knights: 1

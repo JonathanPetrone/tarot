@@ -1,30 +1,29 @@
 Capricorn Monthly Reading for july 2025
 
- 1. Current Situation                   -> Two of Swords
- 2. Challenges                          -> Five of Cups
- 3. Strengths                           -> King of Swords
- 4. What to Focus On                    -> Six of Swords
- 5. Past Energy                         -> Eight of Wands
- 6. Near Future                         -> Four of Wands
- 7. Advice                              -> Strength
- 8. External Influences                 -> Page of Cups
- 9. Hopes and Fears                     -> Seven of Wands
-10. Likely Outcome                      -> Two of Wands
+ 1. Current Situation                   -> Six of Swords
+ 2. Challenges                          -> King of Swords
+ 3. Strengths                           -> The Emperor
+ 4. What to Focus On                    -> Nine of Swords
+ 5. Past Energy                         -> Queen of Swords
+ 6. Near Future                         -> Four of Cups
+ 7. Advice                              -> Nine of Wands
+ 8. External Influences                 -> Seven of Cups
+ 9. Hopes and Fears                     -> Two of Cups
+10. Likely Outcome                      -> The Magician
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 1
-Minor Arcana Cards: 9
-Cups: 2
+Major Arcana Cards: 2
+Minor Arcana Cards: 8
+Cups: 3
 Pentacles: 0
-Swords: 3
-Wands: 4
-Twos: 2
+Swords: 4
+Wands: 1
+Twos: 1
 Fours: 1
-Fives: 1
 Sixes: 1
 Sevens: 1
-Eights: 1
-Pages: 1
+Nines: 2
+Queens: 1
 Kings: 1

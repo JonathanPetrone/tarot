@@ -1,28 +1,28 @@
 Leo Monthly Reading for july 2025
 
- 1. Current Situation                   -> The Tower
- 2. Challenges                          -> Queen of Pentacles
- 3. Strengths                           -> Ten of Cups
- 4. What to Focus On                    -> Knight of Pentacles
- 5. Past Energy                         -> Five of Cups
- 6. Near Future                         -> Page of Pentacles
- 7. Advice                              -> Death
- 8. External Influences                 -> Eight of Swords
- 9. Hopes and Fears                     -> Knight of Swords
-10. Likely Outcome                      -> The Fool
+ 1. Current Situation                   -> Four of Pentacles
+ 2. Challenges                          -> Page of Swords
+ 3. Strengths                           -> Six of Swords
+ 4. What to Focus On                    -> King of Pentacles
+ 5. Past Energy                         -> Seven of Swords
+ 6. Near Future                         -> Judgement
+ 7. Advice                              -> Queen of Wands
+ 8. External Influences                 -> King of Swords
+ 9. Hopes and Fears                     -> Queen of Cups
+10. Likely Outcome                      -> Queen of Pentacles
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 3
-Minor Arcana Cards: 7
-Cups: 2
+Major Arcana Cards: 1
+Minor Arcana Cards: 9
+Cups: 1
 Pentacles: 3
-Swords: 2
-Wands: 0
-Fives: 1
-Eights: 1
-Tens: 1
+Swords: 4
+Wands: 1
+Fours: 1
+Sixes: 1
+Sevens: 1
 Pages: 1
-Knights: 2
-Queens: 1
+Queens: 3
+Kings: 2

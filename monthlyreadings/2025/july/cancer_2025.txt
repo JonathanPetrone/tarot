@@ -1,28 +1,29 @@
 Cancer Monthly Reading for july 2025
 
- 1. Current Situation                   -> The Fool
- 2. Challenges                          -> Queen of Swords
- 3. Strengths                           -> Nine of Wands
- 4. What to Focus On                    -> Two of Wands
- 5. Past Energy                         -> Ten of Swords
- 6. Near Future                         -> The World
- 7. Advice                              -> Eight of Wands
- 8. External Influences                 -> Page of Wands
- 9. Hopes and Fears                     -> The Star
-10. Likely Outcome                      -> Eight of Swords
+ 1. Current Situation                   -> Eight of Wands
+ 2. Challenges                          -> Two of Wands
+ 3. Strengths                           -> Three of Cups
+ 4. What to Focus On                    -> The Hermit
+ 5. Past Energy                         -> Three of Pentacles
+ 6. Near Future                         -> Six of Pentacles
+ 7. Advice                              -> Four of Pentacles
+ 8. External Influences                 -> Ten of Wands
+ 9. Hopes and Fears                     -> King of Cups
+10. Likely Outcome                      -> Three of Wands
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 3
-Minor Arcana Cards: 7
-Cups: 0
-Pentacles: 0
-Swords: 3
+Major Arcana Cards: 1
+Minor Arcana Cards: 9
+Cups: 2
+Pentacles: 3
+Swords: 0
 Wands: 4
 Twos: 1
-Eights: 2
-Nines: 1
+Threes: 3
+Fours: 1
+Sixes: 1
+Eights: 1
 Tens: 1
-Pages: 1
-Queens: 1
+Kings: 1

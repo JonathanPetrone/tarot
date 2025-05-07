@@ -1,28 +1,26 @@
 Aries Monthly Reading for july 2025
 
- 1. Current Situation                   -> Five of Cups
- 2. Challenges                          -> Knight of Swords
- 3. Strengths                           -> Four of Pentacles
- 4. What to Focus On                    -> The Hanged Man
- 5. Past Energy                         -> Six of Cups
- 6. Near Future                         -> Two of Cups
- 7. Advice                              -> Temperance
- 8. External Influences                 -> The Hierophant
- 9. Hopes and Fears                     -> Eight of Wands
-10. Likely Outcome                      -> Two of Swords
+ 1. Current Situation                   -> The Hanged Man
+ 2. Challenges                          -> Six of Cups
+ 3. Strengths                           -> Knight of Cups
+ 4. What to Focus On                    -> Temperance
+ 5. Past Energy                         -> Eight of Pentacles
+ 6. Near Future                         -> Queen of Pentacles
+ 7. Advice                              -> The Tower
+ 8. External Influences                 -> Six of Wands
+ 9. Hopes and Fears                     -> Eight of Cups
+10. Likely Outcome                      -> Death
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 3
-Minor Arcana Cards: 7
+Major Arcana Cards: 4
+Minor Arcana Cards: 6
 Cups: 3
-Pentacles: 1
-Swords: 2
+Pentacles: 2
+Swords: 0
 Wands: 1
-Twos: 2
-Fours: 1
-Fives: 1
-Sixes: 1
-Eights: 1
+Sixes: 2
+Eights: 2
 Knights: 1
+Queens: 1

@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	aihandler "github.com/jonathanpetrone/aitarot/internal/ai-handler"
+	htmlhandler "github.com/jonathanpetrone/aitarot/internal/html-handler"
 )
 
 func main() {
@@ -24,5 +24,5 @@ func main() {
 	}
 
 	fmt.Printf("🔮 Generating html template for %s %s %s...\n", sign, month, year)
-	aihandler.MakeHTMLTemplate(sign, year, month)
+	htmlhandler.MakeHTMLTemplate(sign, year, month)
 }

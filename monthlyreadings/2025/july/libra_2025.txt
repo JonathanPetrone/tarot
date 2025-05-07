@@ -1,27 +1,28 @@
 Libra Monthly Reading for july 2025
 
- 1. Current Situation                   -> Six of Wands
- 2. Challenges                          -> The Emperor
- 3. Strengths                           -> Three of Swords
- 4. What to Focus On                    -> Seven of Swords
- 5. Past Energy                         -> Page of Pentacles
- 6. Near Future                         -> Three of Pentacles
- 7. Advice                              -> The Empress
- 8. External Influences                 -> Page of Wands
- 9. Hopes and Fears                     -> Knight of Pentacles
-10. Likely Outcome                      -> Six of Cups
+ 1. Current Situation                   -> Three of Cups
+ 2. Challenges                          -> Wheel of Fortune
+ 3. Strengths                           -> Nine of Cups
+ 4. What to Focus On                    -> Six of Cups
+ 5. Past Energy                         -> Two of Cups
+ 6. Near Future                         -> Four of Swords
+ 7. Advice                              -> The Tower
+ 8. External Influences                 -> King of Pentacles
+ 9. Hopes and Fears                     -> Three of Pentacles
+10. Likely Outcome                      -> The Magician
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 2
-Minor Arcana Cards: 8
-Cups: 1
-Pentacles: 3
-Swords: 2
-Wands: 2
+Major Arcana Cards: 3
+Minor Arcana Cards: 7
+Cups: 4
+Pentacles: 2
+Swords: 1
+Wands: 0
+Twos: 1
 Threes: 2
-Sixes: 2
-Sevens: 1
-Pages: 2
-Knights: 1
+Fours: 1
+Sixes: 1
+Nines: 1
+Kings: 1
