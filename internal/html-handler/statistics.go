@@ -26,7 +26,7 @@ func ParseStatistics(filePath string) (*Statistics, error) {
 	rankCount := map[string]int{}
 
 	suitRegex := regexp.MustCompile(`^(Cups|Pentacles|Swords|Wands):\s+(\d+)`)
-	rankRegex := regexp.MustCompile(`^(Sixes|Sevens|Eights|Nines|Tens|Pages|Knights|Queens|Kings|Aces):\s+(\d+)`)
+	rankRegex := regexp.MustCompile(`^(Twos|Threes|Fours|Fives|Sixes|Sevens|Eights|Nines|Tens|Pages|Knights|Queens|Kings|Aces):\s+(\d+)`)
 	arcanaRegex := regexp.MustCompile(`^(Major|Minor) Arcana Cards:\s+(\d+)`)
 
 	scanner := bufio.NewScanner(file)

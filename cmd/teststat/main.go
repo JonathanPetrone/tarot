@@ -2,20 +2,21 @@ package main
 
 import (
 	"fmt"
-	"strings"
 
 	htmlhandler "github.com/jonathanpetrone/aitarot/internal/html-handler"
 )
 
 func main() {
-	stats, err := htmlhandler.ParseStatistics("monthlyreadings/2025/july/sagittarius_2025.txt")
+	cards, err := htmlhandler.GetCardsFromReading("monthlyreadings/2025/july/sagittarius_2025.txt")
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
 
-	fmt.Printf("Major Arcana Cards: %d\n", stats.MajorArcana)
-	fmt.Printf("Minor Arcana Cards: %d\n", stats.MinorArcana)
-	fmt.Printf("Most Common Suite: %s\n", strings.Join(stats.MostCommonSuit, ", "))
-	fmt.Printf("Most Common Rank: %s\n", strings.Join(stats.MostCommonRank, ", "))
+	for _, card := range cards {
+		fmt.Printf("Name: %s, Arcana: %s, Element: %s, ImagePath: %s\n",
+			card.Name, card.Arcana, card.Element, card.ImagePath)
+	}
+
+	fmt.Println(len(cards))
 }
