@@ -17,11 +17,11 @@ type MonthlyReading struct {
 }
 
 type Card struct {
-	Title       string
-	Description string
-	Image       string
-	Position    string
-	SmallSpread []SmallCard
+	Title         string
+	Description   string
+	Image         string
+	Position      string
+	SmallPosition string
 }
 
 type SmallCard struct {
@@ -42,6 +42,19 @@ var cardPositions = []string{
 	"top-[10px] left-[348px]",
 }
 
+var smallCardPositions = []string{
+	"top-[40px] left-[24px]",
+	"top-[40px] left-[24px] rotate-90",
+	"top-[12px] left-[24px]",
+	"top-[68px] left-[24px]",
+	"top-[40px] left-[1px]",
+	"top-[40px] left-[48px]",
+	"top-[77px] left-[76px]",
+	"top-[52px] left-[76px]",
+	"top-[27px] left-[76px]",
+	"top-[2px] left-[76px]",
+}
+
 func MakeHTMLTemplate(sign, year, month string) {
 	chosenTemplate := "reading_template_02.html"
 	filePath := fmt.Sprintf("monthlyreadings/%s/%s/%s_2025.txt", year, month, sign)
@@ -55,10 +68,12 @@ func MakeHTMLTemplate(sign, year, month string) {
 		log.Fatal("Couldn't parse cards in reading")
 	}
 
-	fmt.Printf("Major Arcana Cards: %d\n", stats.MajorArcana)
-	fmt.Printf("Minor Arcana Cards: %d\n", stats.MinorArcana)
-	fmt.Printf("Most Common Suite: %s\n", strings.Join(stats.MostCommonSuit, ", "))
-	fmt.Printf("Most Common Rank: %s\n", strings.Join(stats.MostCommonRank, ", "))
+	/*
+		fmt.Printf("Major Arcana Cards: %d\n", stats.MajorArcana)
+		fmt.Printf("Minor Arcana Cards: %d\n", stats.MinorArcana)
+		fmt.Printf("Most Common Suite: %s\n", strings.Join(stats.MostCommonSuit, ", "))
+		fmt.Printf("Most Common Rank: %s\n", strings.Join(stats.MostCommonRank, ", "))
+	*/
 
 	// Given the params this picks up a Madame AI response
 	content := ExtractContentFromResponse(sign, year, month)
@@ -84,10 +99,11 @@ func MakeHTMLTemplate(sign, year, month string) {
 		}
 		fmt.Println(cardsInReading[i].ImagePath)
 		card := Card{
-			Title:       strings.TrimSpace(lines[0]),
-			Description: strings.TrimSpace(lines[1]),
-			Image:       cardsInReading[i].ImagePath,
-			Position:    cardPositions[i],
+			Title:         strings.TrimSpace(lines[0]),
+			Description:   strings.TrimSpace(lines[1]),
+			Image:         cardsInReading[i].ImagePath,
+			Position:      cardPositions[i],
+			SmallPosition: smallCardPositions[i],
 		}
 		reading.Cards = append(reading.Cards, card)
 	}

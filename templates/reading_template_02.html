@@ -34,22 +34,22 @@
     <div id="text_reading">
         {{ range $index, $card := .Cards }}
         <h3 id="card-section-{{ add $index 1 }}" class="text-white text-xl ml-12 mr-12 mb-6">
-           {{ add $index 1 }}. {{ $card.Title }}
+           {{ $card.Title }}
         </h3>
         <div class="flex flex-col md:flex-row items-start justify-between ml-12 mr-12 mb-12 gap-8">
         <p class="text-white">{{ $card.Description }}</p>
-
              <div class="relative w-[104px] h-[104px] mt-4 mr-12 md:mt-0">
+                <img src="{{ $card.Image }}" class="absolute {{ $card.SmallPosition }} w-4 h-6 w-16 h-24 z-20 z-20 hover:scale-125" />
                 <div class="absolute top-[40px] left-[24px] w-4 h-6 bg-black rounded-sm z-10"></div>
                 <div class="absolute top-[40px] left-[24px] w-4 h-6 bg-black rounded-sm rotate-90 z-10"></div>
                 <div class="absolute top-[12px] left-[24px] w-4 h-6 bg-black rounded-sm  z-10"></div>  
                 <div class="absolute top-[68px] left-[24px] w-4 h-6 bg-black rounded-sm  z-10"></div>
                 <div class="absolute top-[40px] left-[1px] w-4 h-6 bg-black rounded-sm  z-10"></div>       
                 <div class="absolute top-[40px] left-[48px] w-4 h-6 bg-black rounded-sm  z-10"></div>      
-                <div class="absolute top-[2px] left-[76px] w-4 h-6 bg-black rounded-sm z-10"></div>   
-                <div class="absolute top-[27px] left-[76px] w-4 h-6 bg-black rounded-sm z-10"></div> 
-                <div class="absolute top-[52px] left-[76px] w-4 h-6 bg-black rounded-sm z-10"></div>    
-                <div class="absolute top-[77px] left-[76px] w-4 h-6 bg-black rounded-sm  z-10"></div>   
+                <div class="absolute top-[77px] left-[76px] w-4 h-6 bg-black rounded-sm z-10"></div>   
+                <div class="absolute top-[52px] left-[76px] w-4 h-6 bg-black rounded-sm z-10"></div> 
+                <div class="absolute top-[27px] left-[76px] w-4 h-6 bg-black rounded-sm z-10"></div>    
+                <div class="absolute top-[2px] left-[76px] w-4 h-6 bg-black rounded-sm  z-10"></div>   
             </div>
         </div>      
         {{ end }}
