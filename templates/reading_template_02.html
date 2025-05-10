@@ -1,14 +1,14 @@
 {{ define "reading" }}
-<div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 m-2 flex-grow flex flex-col p-4 justify-center"> 
+<div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 m-2 flex-grow flex flex-col p-4 justify-center md:min-w-[744px]"> 
 
     <!-- Heading -->
-    <h2 class="text-white text-4xl text-center ml-12 mr-12 mb-12 mt-8">Monthly Reading</h2>
+    <h2 class="text-white text-4xl text-center ml-12 mr-12 mb-12 mt-8">Monthly Reading for {{ .Sign}} - {{ .Month}} {{ .Year }}</h2>
 
     <!-- Summary Section -->
     <p class="text-white text-l mb-12 ml-12 mr-12">{{ .Summary }}</p>
 
     <!-- Main Layout -->
-    <div class="flex flex-row justify-center items-center space-x-6 mb-10">
+    <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6 mb-10">
         
         <!-- Card Spread Layout -->
         <div class="relative w-[420px] h-[420px]">
@@ -36,9 +36,10 @@
         <h3 id="card-section-{{ add $index 1 }}" class="text-white text-xl ml-12 mr-12 mb-6">
            {{ $card.Title }}
         </h3>
-        <div class="flex flex-col md:flex-row items-start justify-between ml-12 mr-12 mb-12 gap-8">
+        <div class="flex flex-col md:flex-row items-center justify-between ml-12 mr-12 mb-12 gap-8 md:items-start">
+            
         <p class="text-white">{{ $card.Description }}</p>
-             <div class="relative w-[104px] h-[104px] mt-4 mr-12 md:mt-0">
+            <div class="relative w-[104px] h-[104px] mt-4 mr-12 md:mt-0">
                 <img src="{{ $card.Image }}" class="absolute {{ $card.SmallPosition }} w-4 h-6 w-16 h-24 z-20 z-20 hover:scale-125" />
                 <div class="absolute top-[40px] left-[24px] w-4 h-6 bg-black rounded-sm z-10"></div>
                 <div class="absolute top-[40px] left-[24px] w-4 h-6 bg-black rounded-sm rotate-90 z-10"></div>

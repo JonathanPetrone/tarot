@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -14,6 +15,9 @@ type MonthlyReading struct {
 	Cards         []Card
 	ReadingStats  *Statistics
 	FinalWhispers string
+	Year          string
+	Month         string
+	Sign          string
 }
 
 type Card struct {
@@ -55,6 +59,13 @@ var smallCardPositions = []string{
 	"top-[2px] left-[76px]",
 }
 
+func CapitalizeFirstCharacter(s string) string {
+	if len(s) == 0 {
+		return s // Return empty if string is empty
+	}
+	return strings.ToUpper(string(s[0])) + s[1:]
+}
+
 func MakeHTMLTemplate(sign, year, month string) {
 	chosenTemplate := "reading_template_02.html"
 	filePath := fmt.Sprintf("monthlyreadings/%s/%s/%s_2025.txt", year, month, sign)
@@ -89,7 +100,13 @@ func MakeHTMLTemplate(sign, year, month string) {
 		Summary:       strings.TrimSpace(parts[0]),
 		FinalWhispers: strings.TrimSpace(parts[len(parts)-1]),
 		ReadingStats:  &stats,
+		Year:          year,
+		Month:         CapitalizeFirstCharacter(month),
+		Sign:          sign,
 	}
+
+	//remove symbols
+	re := regexp.MustCompile(`[\x{1F300}-\x{1F5FF}\x{1F600}-\x{1F64F}\x{1F680}-\x{1F6FF}\x{1F700}-\x{1F77F}\x{1F780}-\x{1F7FF}\x{1F800}-\x{1F8FF}\x{1F900}-\x{1F9FF}\x{1FA00}-\x{1FA6F}\x{1FA70}-\x{1FAFF}\x{2600}-\x{26FF}\x{2700}-\x{27BF}]`)
 
 	cardSections := parts[1 : len(parts)-1]
 	for i, part := range cardSections {
@@ -100,7 +117,7 @@ func MakeHTMLTemplate(sign, year, month string) {
 		fmt.Println(cardsInReading[i].ImagePath)
 		card := Card{
 			Title:         strings.TrimSpace(lines[0]),
-			Description:   strings.TrimSpace(lines[1]),
+			Description:   re.ReplaceAllString(strings.TrimSpace(lines[1]), ""),
 			Image:         cardsInReading[i].ImagePath,
 			Position:      cardPositions[i],
 			SmallPosition: smallCardPositions[i],

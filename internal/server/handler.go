@@ -22,7 +22,7 @@ func init() {
 }
 
 func ServeStart(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/index.html"))
+	tmpl := template.Must(template.ParseFiles("templates/index_02.html"))
 	data := struct{ Title string }{Title: "AI Tarot"}
 	tmpl.Execute(w, data)
 }

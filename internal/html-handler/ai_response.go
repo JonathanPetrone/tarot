@@ -85,5 +85,10 @@ func SplitMadameAIContent(content string) ([]string, error) {
 		return nil, fmt.Errorf("final split result had %d parts (expected 12)", len(parts))
 	}
 
+	for i := range parts {
+		re := regexp.MustCompile(`\*\*(.*?)\*\*|__(.*?)__|~~(.*?)~~`)
+		parts[i] = re.ReplaceAllString(parts[i], "")
+	}
+
 	return parts, nil
 }
