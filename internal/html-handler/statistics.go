@@ -14,10 +14,10 @@ type Statistics struct {
 	MostCommonRank []string
 }
 
-func ParseStatistics(filePath string) (*Statistics, error) {
+func ParseStatistics(filePath string) (Statistics, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
-		return nil, err
+		return Statistics{}, err
 	}
 	defer file.Close()
 
@@ -54,7 +54,7 @@ func ParseStatistics(filePath string) (*Statistics, error) {
 	}
 
 	if err := scanner.Err(); err != nil {
-		return nil, err
+		return Statistics{}, err
 	}
 
 	// Find most common suit
@@ -84,5 +84,5 @@ func ParseStatistics(filePath string) (*Statistics, error) {
 		stats.MostCommonRank = []string{"Mixed Ranks"}
 	}
 
-	return &stats, nil
+	return stats, nil
 }

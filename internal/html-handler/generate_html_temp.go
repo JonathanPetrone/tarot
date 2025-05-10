@@ -12,13 +12,13 @@ import (
 type MonthlyReading struct {
 	Summary       string
 	Cards         []Card
+	ReadingStats  *Statistics
 	FinalWhispers string
 }
 
 type Card struct {
 	Title       string
 	Description string
-	Icon        string
 	Image       string
 	Position    string
 	SmallSpread []SmallCard
@@ -42,30 +42,52 @@ var cardPositions = []string{
 	"top-[10px] left-[348px]",
 }
 
-// Parses and renders the HTML template
 func MakeHTMLTemplate(sign, year, month string) {
+	chosenTemplate := "reading_template_02.html"
+	filePath := fmt.Sprintf("monthlyreadings/%s/%s/%s_2025.txt", year, month, sign)
+
+	stats, err := ParseStatistics(filePath)
+	if err != nil {
+		log.Fatal("Couldn't parse statistics")
+	}
+	cardsInReading, err := GetCardsFromReading(filePath)
+	if err != nil {
+		log.Fatal("Couldn't parse cards in reading")
+	}
+
+	fmt.Printf("Major Arcana Cards: %d\n", stats.MajorArcana)
+	fmt.Printf("Minor Arcana Cards: %d\n", stats.MinorArcana)
+	fmt.Printf("Most Common Suite: %s\n", strings.Join(stats.MostCommonSuit, ", "))
+	fmt.Printf("Most Common Rank: %s\n", strings.Join(stats.MostCommonRank, ", "))
+
+	// Given the params this picks up a Madame AI response
 	content := ExtractContentFromResponse(sign, year, month)
 
+	// Then we split it into parts
 	parts, err := SplitMadameAIContent(content)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// Then we store the content in a Monthly Reading struct
 	reading := MonthlyReading{
 		Summary:       strings.TrimSpace(parts[0]),
 		FinalWhispers: strings.TrimSpace(parts[len(parts)-1]),
+		ReadingStats:  &stats,
 	}
 
 	cardSections := parts[1 : len(parts)-1]
-	for _, part := range cardSections {
+	for i, part := range cardSections {
 		lines := strings.SplitN(part, "\n", 2)
 		if len(lines) != 2 {
 			log.Fatalf("Failed to split section into title + description:\n%s", part)
 		}
-
+		fmt.Println(cardsInReading[i].ImagePath)
 		card := Card{
 			Title:       strings.TrimSpace(lines[0]),
 			Description: strings.TrimSpace(lines[1]),
+			Image:       cardsInReading[i].ImagePath,
+			Position:    cardPositions[i],
 		}
 		reading.Cards = append(reading.Cards, card)
 	}
@@ -76,7 +98,7 @@ func MakeHTMLTemplate(sign, year, month string) {
 	if err != nil {
 		log.Fatalf("❌ Failed to get working directory: %v", err)
 	}
-	tmplPath := filepath.Join(rootDir, "templates", "reading_template.html")
+	tmplPath := filepath.Join(rootDir, "templates", chosenTemplate)
 	fmt.Println("📄 Attempting to load template from:", tmplPath)
 
 	// Parse template with funcMap

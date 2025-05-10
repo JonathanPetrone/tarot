@@ -28,20 +28,30 @@
                 <li>Most Common Rank: {{ range $index, $element := .ReadingStats.MostCommonRank }}{{ if $index }}, {{ end }}{{$element}}{{ end }}</li>
             </ul>
         </div>
-
-        
     </div>
+
+    <!-- Text Reading Section -->
     <div id="text_reading">
         {{ range $index, $card := .Cards }}
         <h3 id="card-section-{{ add $index 1 }}" class="text-white text-xl ml-12 mr-12 mb-6">
-           {{ add $index 1 }}. {{ $card.Title }}
-         </h3>          
-        <p class="text-white ml-12 mr-12 mb-12">{{ $card.Description }}</p>
+            {{ $card.Icon }} {{ add $index 1 }}. {{ $card.Title }}
+        </h3>          
+        <div class="flex flex-col md:flex-row items-start justify-between ml-12 mr-12 mb-12 gap-8">
+            <p class="text-white">{{ $card.Description }}</p>
+
+            <!-- Small Spread -->
+            <div id="small-spread-{{ add $index 1 }}" class="relative w-[104px] h-[104px] mt-4 mr-12 md:mt-0">
+                {{ range $posIndex, $smallCard := $card.SmallSpread }}
+                    <img src="{{ $smallCard.Image }}" class="absolute {{ $smallCard.Position }} w-4 h-6 z-20 hover:scale-125" />
+                    <div class="absolute {{ $smallCard.Position }} w-4 h-6 bg-black rounded-sm z-10"></div>
+                {{ end }}
+            </div>
+        </div>
         {{ end }}
-    
+        
+        <!-- Final Whisper -->
         <h3 class="text-white text-xl ml-12 mr-12 mb-6">🌟 Madame’s Final Whisper</h3>
         <p class="text-white ml-12 mr-12 mb-12">{{ .FinalWhispers }}</p>
-   </div>
-
+    </div>
 </div>
 {{ end }}
