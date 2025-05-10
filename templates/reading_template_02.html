@@ -8,7 +8,7 @@
     <p class="text-white text-l mb-12 ml-12 mr-12">{{ .Summary }}</p>
 
     <!-- Main Layout -->
-    <div class="flex flex-row justify-center items-start space-x-6 mb-10">
+    <div class="flex flex-row justify-center items-center space-x-6 mb-10">
         
         <!-- Card Spread Layout -->
         <div class="relative w-[420px] h-[420px]">
@@ -35,8 +35,23 @@
         {{ range $index, $card := .Cards }}
         <h3 id="card-section-{{ add $index 1 }}" class="text-white text-xl ml-12 mr-12 mb-6">
            {{ add $index 1 }}. {{ $card.Title }}
-         </h3>          
-        <p class="text-white ml-12 mr-12 mb-12">{{ $card.Description }}</p>
+        </h3>
+        <div class="flex flex-col md:flex-row items-start justify-between ml-12 mr-12 mb-12 gap-8">
+        <p class="text-white">{{ $card.Description }}</p>
+
+             <div class="relative w-[104px] h-[104px] mt-4 mr-12 md:mt-0">
+                <div class="absolute top-[40px] left-[24px] w-4 h-6 bg-black rounded-sm z-10"></div>
+                <div class="absolute top-[40px] left-[24px] w-4 h-6 bg-black rounded-sm rotate-90 z-10"></div>
+                <div class="absolute top-[12px] left-[24px] w-4 h-6 bg-black rounded-sm  z-10"></div>  
+                <div class="absolute top-[68px] left-[24px] w-4 h-6 bg-black rounded-sm  z-10"></div>
+                <div class="absolute top-[40px] left-[1px] w-4 h-6 bg-black rounded-sm  z-10"></div>       
+                <div class="absolute top-[40px] left-[48px] w-4 h-6 bg-black rounded-sm  z-10"></div>      
+                <div class="absolute top-[2px] left-[76px] w-4 h-6 bg-black rounded-sm z-10"></div>   
+                <div class="absolute top-[27px] left-[76px] w-4 h-6 bg-black rounded-sm z-10"></div> 
+                <div class="absolute top-[52px] left-[76px] w-4 h-6 bg-black rounded-sm z-10"></div>    
+                <div class="absolute top-[77px] left-[76px] w-4 h-6 bg-black rounded-sm  z-10"></div>   
+            </div>
+        </div>      
         {{ end }}
     
         <h3 class="text-white text-xl ml-12 mr-12 mb-6">🌟 Madame’s Final Whisper</h3>
