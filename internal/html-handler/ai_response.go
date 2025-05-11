@@ -86,7 +86,7 @@ func SplitMadameAIContent(content string) ([]string, error) {
 	}
 
 	for i := range parts {
-		re := regexp.MustCompile(`\*\*(.*?)\*\*|__(.*?)__|~~(.*?)~~`)
+		re := regexp.MustCompile(`\*\*`)
 		parts[i] = re.ReplaceAllString(parts[i], "")
 	}
 

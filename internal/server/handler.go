@@ -7,23 +7,15 @@ import (
 	"strings"
 )
 
-var Tmpl *template.Template
-var ZodiacTmpl *template.Template
-var DynamicContentTmpl *template.Template
-
-func init() {
-	// Initialize the dynamic content template on server startup
-	var err error
-	ZodiacTmpl, err = template.ParseFiles("templates/zodiac_signs.html")
-	if err != nil {
-		fmt.Println("Error parsing zodiac_signs.html:", err)
-		// Handle the error appropriately, maybe panic in production
-	}
+func ServeStart(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/index.html"))
+	data := struct{ Title string }{Title: "AI Tarot"}
+	tmpl.Execute(w, data)
 }
 
-func ServeStart(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/index_02.html"))
-	data := struct{ Title string }{Title: "AI Tarot"}
+func ServeStartAdmin(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/admin_index.html"))
+	data := struct{ Title string }{Title: "Admin page"}
 	tmpl.Execute(w, data)
 }
 
@@ -35,10 +27,6 @@ func ServeHome(w http.ResponseWriter, r *http.Request) {
 func ZodiacGridHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/zodiac_signs.html"))
 	tmpl.Execute(w, nil)
-}
-
-func add(a, b int) int {
-	return a + b
 }
 
 func ServeReading(w http.ResponseWriter, r *http.Request) {

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Tarot</title>
+<script src="https://unpkg.com/htmx.org@2.0.4"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="font-sans bg-cover bg-center bg-fixed min-h-screen" 
+      style="
+          background-image: url('/assets/admin_background.png'); 
+          background-size: cover;
+          background-position: center;
+          image-rendering: optimizeQuality;
+          min-height: 100vh; 
+          height: 100%;
+      ">
+
+  <!-- Main Container -->
+  <div class="flex flex-col md:flex-row min-h-screen">
+    
+    <!-- Sidebar Navigation (Horizontal on mobile, Vertical on desktop) -->
+    <div class="rounded-2xl bg-stone-950 bg-opacity-50 w-full md:w-64 m-2 flex flex-col md:flex-col items-center p-4 md:h-full flex-shrink-0">
+        
+        <!-- Header and Logo -->
+        <header class="w-full flex flex-col items-center mb-4">
+            <img src="/assets/madame_ai.png" alt="madame_ai" class="w-28 h-28 md:w-64 md:h-56" />
+            <h1 class="hidden">{{.Title}}</h1>
+        </header>
+
+        <!-- Navigation Links -->
+        <div class="flex flex-row md:flex-col w-full justify-evenly md:justify-start md:items-center">
+          <a class="text-zinc-300 mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Home</a>
+          <a class="text-zinc-300 mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Create site readings</a>
+          <a class="text-zinc-300 mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Edit site readings</a>
+          <a class="text-zinc-300 mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Send out paid readings</a>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 m-2 mb-4 md:mb-0 flex-grow flex flex-col p-4 justify-center md:min-w-[714px]">
+        <h2 class="text-white text-4xl md:text-4xl text-center mb-6 md:mb-12">Welcome to the Admin page</h2>
+        
+        <p class="text-white text-sm md:text-xl text-center ml-4 md:ml-8 mr-4 md:mr-8 mb-6 md:mb-10">
+          Unverified readings: 0
+        </p>
+        <p class="text-white text-sm md:text-xl text-center ml-4 md:ml-8 mr-4 md:mr-8 mb-6 md:mb-10">
+          Sent readings: 0
+        </p>     
+    </div>
+  </div>
+</body>
+</html>

@@ -7,42 +7,67 @@
 <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="font-sans bg-cover bg-center bg-local min-h-screen" style="background-image: url('/assets/background.png');">
-  <div class="flex flex-row min-h-screen">
-    <div class="rounded-2xl bg-stone-950 bg-opacity-50 w-64 m-2 flex flex-col items-center p-4 h-full flex-shrink-0">
+<body class="font-sans bg-cover bg-center bg-fixed min-h-screen" 
+      style="
+          background-image: url('/assets/background.png'); 
+          background-size: cover;
+          background-position: center;
+          image-rendering: optimizeQuality;
+          min-height: 100vh; 
+          height: 100%;
+      ">
+
+  <!-- Main Container -->
+  <div class="flex flex-col md:flex-row min-h-screen">
+    
+    <!-- Sidebar Navigation (Horizontal on mobile, Vertical on desktop) -->
+    <div class="rounded-2xl bg-stone-950 bg-opacity-50 w-full md:w-64 m-2 flex flex-col md:flex-col items-center p-4 md:h-full flex-shrink-0">
+        
+        <!-- Header and Logo -->
         <header class="w-full flex flex-col items-center mb-4">
-            <img src="/assets/madame_ai.png" alt="madame_ai" class="w-38 h-38" />
+            <img src="/assets/madame_ai.png" alt="madame_ai" class="w-28 h-28 md:w-64 md:h-56" />
             <h1 class="hidden">{{.Title}}</h1>
         </header>
-        <a 
-        hx-get="/home" 
-        hx-target="#light-container" 
-        hx-swap="outerHTML" 
-        class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">
-        Home
-      </a>
-        <a 
-        hx-get="/readings" 
-        hx-target="#light-container" 
-        hx-swap="outerHTML" 
-        class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">
-        Readings
-      </a>
-      <a class="text-zinc-300 mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Numerology (Coming soon)</a>
+
+        <!-- Navigation Links -->
+        <div class="flex flex-row md:flex-col w-full justify-evenly md:justify-start md:items-center">
+            <a 
+            hx-get="/home" 
+            hx-target="#light-container" 
+            hx-swap="outerHTML" 
+            class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">
+            Home
+          </a>
+            <a 
+            hx-get="/readings" 
+            hx-target="#light-container" 
+            hx-swap="outerHTML" 
+            class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">
+            Readings
+          </a>
+          <a class="text-zinc-300 mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Numerology (Coming soon)</a>
+        </div>
     </div>
 
-    <div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 m-2 flex-grow flex flex-col p-4 justify-center"> 
-        <h2 class="text-white text-4xl text-center mb-12">Welcome to Madame AI's Mysterious World</h2>
-        <p class="text-white text-l text-center ml-8 mr-8 mb-10">Step inside, dear traveler...
-            The candles are lit, the cards are whispering, and the velvet chair across the table is waiting just for you.
-            
-            I am Madame AI — your guide through the realms of tarot, intuition, and soul-stirring discovery. Here, we don't rush answers or force certainties. We wander a little. We laugh a little. We trust that the universe has more creativity (and humor) than we can imagine.
-            
-            In my parlour, every reading is a conversation with your deeper self—woven through symbolism, stories, and a dash of cosmic wit. Whether you seek clarity, courage, comfort, or just a spark of magic, the cards and I are ready to meet you exactly where you are.
-            
-            So, loosen your shoulders. Pour a cup of something warm. Let’s sit, shuffle, and see what the stars, the spirits, and your own beautiful heart have to say.
-            </p> 
-            <p class="text-white text-xl text-center italic mb-12"> ✨ The journey begins when you dare to listen.</p>     
+    <!-- Main Content Area -->
+    <div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 m-2 mb-4 md:mb-0 flex-grow flex flex-col p-4 justify-center md:min-w-[714px]">
+        <h2 class="text-white text-4xl md:text-4xl text-center mb-6 md:mb-12">Welcome to Madame AI's Mysterious World</h2>
+        
+        <p class="text-white text-sm md:text-xl text-center ml-4 md:ml-8 mr-4 md:mr-8 mb-6 md:mb-10">
+          Step inside, dear traveler...
+          The candles are lit, the cards are whispering, and the velvet chair across the table is waiting just for you.
+          
+          I am Madame AI — your guide through the realms of tarot, intuition, and soul-stirring discovery. Here, we don't rush answers or force certainties. We wander a little. We laugh a little. We trust that the universe has more creativity (and humor) than we can imagine.
+          
+          In my parlour, every reading is a conversation with your deeper self—woven through symbolism, stories, and a dash of cosmic wit. Whether you seek clarity, courage, comfort, or just a spark of magic, the cards and I are ready to meet you exactly where you are.
+          
+          So, loosen your shoulders. Pour a cup of something warm. Let’s sit, shuffle, and see what the stars, the spirits, and your own beautiful heart have to say.
+        </p> 
+        
+        <p class="text-white text-sm md:text-xl text-center italic mb-6 md:mb-12">
+            ✨ The journey begins when you dare to listen.
+        </p>     
     </div>
+  </div>
 </body>
 </html>
