@@ -31,15 +31,33 @@
 
         <!-- Navigation Links -->
         <div class="flex flex-row md:flex-col w-full justify-evenly md:justify-start md:items-center">
-          <a class="text-zinc-300 mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Home</a>
-          <a class="text-zinc-300 mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Create site readings</a>
-          <a class="text-zinc-300 mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Edit site readings</a>
+          <a 
+            hx-get="/admin/home" 
+            hx-target="#light-container-admin" 
+            hx-swap="outerHTML" 
+            class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">
+           Home
+          </a>
+          <a 
+            hx-get="/admin/createreadings" 
+            hx-target="#light-container-admin" 
+            hx-swap="outerHTML" 
+            class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">
+            Create site readings
+          </a>
+          <a 
+            hx-get="/admin/editreadings" 
+            hx-target="#light-container-admin" 
+            hx-swap="outerHTML" 
+            class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">
+            Edit site readings
+          </a>
           <a class="text-zinc-300 mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Send out paid readings</a>
         </div>
     </div>
 
     <!-- Main Content Area -->
-    <div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 m-2 mb-4 md:mb-0 flex-grow flex flex-col p-4 justify-center md:min-w-[714px]">
+    <div id="light-container-admin" class="rounded-2xl bg-slate-100 bg-opacity-10 m-2 mb-4 md:mb-0 flex-grow flex flex-col p-4 justify-center md:min-w-[714px]">
         <h2 class="text-white text-4xl md:text-4xl text-center mb-6 md:mb-12">Welcome to the Admin page</h2>
         
         <p class="text-white text-sm md:text-xl text-center ml-4 md:ml-8 mr-4 md:mr-8 mb-6 md:mb-10">

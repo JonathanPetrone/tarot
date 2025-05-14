@@ -66,15 +66,21 @@ func CapitalizeFirstCharacter(s string) string {
 	return strings.ToUpper(string(s[0])) + s[1:]
 }
 
-func MakeHTMLTemplate(sign, year, month string) {
-	chosenTemplate := "reading_template_02.html"
+func getFilePathMonthlyReading(sign, year, month string) string {
 	filePath := fmt.Sprintf("monthlyreadings/%s/%s/%s_2025.txt", year, month, sign)
 
-	stats, err := ParseStatistics(filePath)
+	return filePath
+}
+
+func MakeHTMLTemplate(sign, year, month string) {
+	chosenTemplate := "reading_template_02.html"
+	filePathMR := getFilePathMonthlyReading(sign, year, month)
+
+	stats, err := ParseStatistics(filePathMR)
 	if err != nil {
 		log.Fatal("Couldn't parse statistics")
 	}
-	cardsInReading, err := GetCardsFromReading(filePath)
+	cardsInReading, err := GetCardsFromReading(filePathMR)
 	if err != nil {
 		log.Fatal("Couldn't parse cards in reading")
 	}
@@ -87,7 +93,8 @@ func MakeHTMLTemplate(sign, year, month string) {
 	*/
 
 	// Given the params this picks up a Madame AI response
-	content := ExtractContentFromResponse(sign, year, month)
+	filePathMadameAIresp := getFilePathMadameAI(sign, year, month)
+	content := ExtractContentFromResponse(filePathMadameAIresp)
 
 	// Then we split it into parts
 	parts, err := SplitMadameAIContent(content)
@@ -102,7 +109,7 @@ func MakeHTMLTemplate(sign, year, month string) {
 		ReadingStats:  &stats,
 		Year:          year,
 		Month:         CapitalizeFirstCharacter(month),
-		Sign:          sign,
+		Sign:          CapitalizeFirstCharacter(sign),
 	}
 
 	//remove symbols

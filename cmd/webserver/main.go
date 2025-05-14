@@ -18,7 +18,7 @@ func init() {
 }
 
 func main() {
-	serverAddr := ":8081"
+	serverAddr := ":8080"
 	log.Printf("Starting server at port %s", serverAddr)
 
 	mux := http.NewServeMux()
@@ -32,6 +32,9 @@ func main() {
 	mux.HandleFunc("/", server.ServeStart) // Generic fallback
 	mux.HandleFunc("/home", server.ServeHome)
 	mux.HandleFunc("/admin", server.ServeStartAdmin)
+	mux.HandleFunc("/admin/createreadings", server.ServeAdminCreateNewReadings)
+	mux.HandleFunc("/admin/editreadings", server.ServeAdminEditReadings)
+	mux.HandleFunc("/admin/home", server.ServeAdminHome)
 
 	httpServer := &http.Server{
 		Handler: mux,

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -17,11 +18,17 @@ type MadameAIResponse struct {
 	} `json:"choices"`
 }
 
-func ExtractContentFromResponse(sign, year, month string) string {
-	filePath := fmt.Sprintf(
-		"/Users/jonathanpetrone/Github/AITarot/MadameAI/%s/%s/%s_reading.html",
-		year, strings.ToLower(month), strings.ToLower(sign),
-	)
+func getFilePathMadameAI(sign, year, month string) string {
+	basePath, err := os.Getwd()
+	if err != nil {
+		fmt.Println("Error getting working directory:", err)
+		return ""
+	}
+	filePath := filepath.Join(basePath, "MadameAI", year, strings.ToLower(month), fmt.Sprintf("%s_reading.html", strings.ToLower(sign)))
+	return filePath
+}
+
+func ExtractContentFromResponse(filePath string) string {
 
 	data, err := os.ReadFile(filePath)
 	if err != nil {
@@ -40,13 +47,9 @@ func ExtractContentFromResponse(sign, year, month string) string {
 	return resp.Choices[0].Message.Content
 }
 
-func splitFlexibleParagraphs(input string) []string {
-	re := regexp.MustCompile(`\n{2,}`) // match 2 or more newlines
-	return re.Split(strings.TrimSpace(input), -1)
-}
-
 func SplitMadameAIContent(content string) ([]string, error) {
 	content = strings.Replace(content, "🔮 Summary\n", "", 1)
+	content = strings.Replace(content, "🌬️ Final Whispers from Madame AI", "", 1)
 	content = strings.Replace(content, "🌬️ Final Whispers from Madame AI", "", 1)
 
 	cardPattern := regexp.MustCompile(`(?m)^.*?\b(\d{1,2})\.\s`)

@@ -19,6 +19,21 @@ func ServeStartAdmin(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, data)
 }
 
+func ServeAdminCreateNewReadings(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/admin_new_readings.html"))
+	tmpl.Execute(w, nil)
+}
+
+func ServeAdminEditReadings(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/admin_edit_readings.html"))
+	tmpl.Execute(w, nil)
+}
+
+func ServeAdminHome(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/admin_home.html"))
+	tmpl.Execute(w, nil)
+}
+
 func ServeHome(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/welcome.html"))
 	tmpl.Execute(w, nil)
