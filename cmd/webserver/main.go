@@ -29,7 +29,9 @@ func main() {
 	// Dynamic routes
 	mux.HandleFunc("/reading", server.ServeReading)
 	mux.HandleFunc("/readings", server.ZodiacGridHandler)
-	mux.HandleFunc("/", server.ServeStart) // Generic fallback
+	mux.HandleFunc("/askthetarot", server.ServeAskTheTarot)
+	mux.HandleFunc("/ask-1-card", server.ServeAskOneCard)
+	mux.HandleFunc("/", server.ServeStart)
 	mux.HandleFunc("/home", server.ServeHome)
 	mux.HandleFunc("/admin", server.ServeStartAdmin)
 	mux.HandleFunc("/admin/createreadings", server.ServeAdminCreateNewReadings)

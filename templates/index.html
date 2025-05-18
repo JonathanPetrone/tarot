@@ -45,7 +45,13 @@
             class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">
             Readings
           </a>
-          <a class="text-zinc-300 mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Numerology (Coming soon)</a>
+          <a 
+            hx-get="/askthetarot" 
+            hx-target="#light-container" 
+            hx-swap="outerHTML" 
+            class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">
+            Ask the tarot
+          </a>
         </div>
     </div>
 

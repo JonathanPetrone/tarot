@@ -5,6 +5,8 @@ import (
 	"html/template"
 	"net/http"
 	"strings"
+
+	"github.com/jonathanpetrone/aitarot/internal/tarot"
 )
 
 func ServeStart(w http.ResponseWriter, r *http.Request) {
@@ -35,13 +37,57 @@ func ServeAdminHome(w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeHome(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/welcome.html"))
+	tmpl := template.Must(template.ParseFiles("templates/home.html"))
 	tmpl.Execute(w, nil)
 }
 
 func ZodiacGridHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/zodiac_signs.html"))
 	tmpl.Execute(w, nil)
+}
+
+func ServeAskTheTarot(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/ask_the_tarot.html"))
+	tmpl.Execute(w, nil)
+}
+
+func ServeAskOneCard(w http.ResponseWriter, r *http.Request) {
+	card := tarot.DrawCards(1)[0] // Fetch the single card
+
+	cardinfo := tarot.CardMeanings[card.Name]
+
+	data := struct {
+		CardName    string
+		ImagePath   string
+		Subheading  string
+		Description string
+		Love        string
+		Career      string
+	}{
+		CardName:    card.Name,
+		ImagePath:   card.ImagePath,
+		Subheading:  cardinfo.Heading,
+		Description: cardinfo.Description,
+		Love:        cardinfo.Love,
+		Career:      cardinfo.Career,
+	}
+
+	// Parse the inline template (only renders the card image)
+	tmpl := template.Must(template.New("card").Parse(`
+		<h2 class="text-white text-4xl text-center mb-6">{{.CardName}}</h2>
+        <img src="{{.ImagePath}}" class="w-32 h-48 mb-6"/>
+		<div class="flex flex-col">
+			<h3 class="text-2xl mb-2">{{.Subheading}}</h3>
+			<p class="mb-6">{{.Description}}</p>
+			<h4 class="text-xl mb-2">Love:</h4>
+			<p class="mb-6">{{.Love}}</p>
+			<h4 class="text-xl mb-2">Career:</h4>
+			<p>{{.Career}}</p>
+		</div>
+    `))
+
+	// Render the template with the card data
+	tmpl.Execute(w, data)
 }
 
 func ServeReading(w http.ResponseWriter, r *http.Request) {

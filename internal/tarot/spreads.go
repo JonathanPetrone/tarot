@@ -12,6 +12,14 @@ type SpreadCard struct {
 	Card     TarotCard
 }
 
+var OneCard = Spread{
+	Name:   "One Card",
+	Length: 1,
+	Template: []SpreadCard{
+		{Position: 1, Context: "The Question"},
+	},
+}
+
 var PastPresentFuture = Spread{
 	Name:   "Past-Present-Future",
 	Length: 3,
