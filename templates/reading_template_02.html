@@ -2,10 +2,10 @@
 <div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 m-2 flex-grow flex flex-col p-4 justify-center md:min-w-[744px]"> 
 
     <!-- Heading -->
-    <h2 class="text-white text-4xl text-center ml-12 mr-12 mb-12 mt-8">Monthly Reading for {{ .Sign}} - {{ .Month}} {{ .Year }}</h2>
+    <h2 class="text-white md:text-4xl mb-4 text-2xl text-center mt-4 md:mb-12 md:ml-12 md:mr-12 md:mt-8">Monthly Reading for {{ .Sign}} - {{ .Month}} {{ .Year }}</h2>
 
     <!-- Summary Section -->
-    <p class="text-white text-l mb-12 ml-12 mr-12">{{ .Summary }}</p>
+    <p class="text-white text-l md:mb-12 md:ml-12 md:mr-12">{{ .Summary }}</p>
 
     <!-- Main Layout -->
     <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6 mb-10">
@@ -14,7 +14,7 @@
         <div class="relative w-[420px] h-[420px]">
             {{ range $index, $card := .Cards }}
                 <a href="#card-section-{{ add $index 1 }}">
-                    <img src="{{ $card.Image }}" id="card-{{ add $index 1 }}" class="absolute {{ $card.Position }} w-16 h-24 hover:scale-125 hover:z-30" />
+                    <img src="{{ $card.Image }}" id="card-{{ add $index 1 }}" class="{{ $card.Position }}" />
                 </a>
             {{ end }}
         </div>
@@ -33,10 +33,10 @@
     </div>
     <div id="text_reading">
         {{ range $index, $card := .Cards }}
-        <h3 id="card-section-{{ add $index 1 }}" class="text-white text-xl ml-12 mr-12 mb-2">
+        <h3 id="card-section-{{ add $index 1 }}" class="text-white text-xl md:ml-12 md:mr-12 mb-2">
            {{ $card.Title }}
         </h3>
-        <div id="general-meaning-{{ $index }}" class="mb-2 ml-12">
+        <div id="general-meaning-{{ $index }}" class="mb-2 md:ml-12">
             <button 
                 class="text-sm text-blue-400 underline hover:text-blue-600"
                 hx-get="/card-meaning?name={{ urlquery $card.Title }}&id={{ $index }}"
@@ -46,7 +46,7 @@
                 Show General Card Meaning
             </button>
         </div>
-        <div class="flex flex-col md:flex-row items-center justify-between ml-12 mr-12 mb-12 gap-8 md:items-start">
+        <div class="flex flex-col md:flex-row items-center justify-between md:ml-12 md:mr-12 mb-12 gap-8 md:items-start">
             
         <p class="text-white">{{ $card.Description }}</p>
             <div class="relative w-[104px] h-[104px] mt-4 mr-12 md:mt-0">
@@ -65,8 +65,8 @@
         </div>      
         {{ end }}
     
-        <h3 class="text-white text-xl ml-12 mr-12 mb-6">🌟 Madame’s Final Whisper</h3>
-        <p class="text-white ml-12 mr-12 mb-12">{{ .FinalWhispers }}</p>
+        <h3 class="text-white text-xl md:ml-12 md:mr-12 mb-6">🌟 Madame’s Final Whisper</h3>
+        <p class="text-white md:ml-12 md:mr-12 mb-12">{{ .FinalWhispers }}</p>
    </div>
 
 </div>

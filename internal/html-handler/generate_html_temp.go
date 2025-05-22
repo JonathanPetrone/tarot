@@ -35,16 +35,16 @@ type SmallCard struct {
 }
 
 var cardPositions = []string{
-	"top-[164px] left-[110px]",
-	"top-[164px] left-[110px] rotate-90",
-	"top-[40px] left-[110px]",
-	"top-[290px] left-[110px]",
-	"top-[164px] left-[10px]",
-	"top-[164px] left-[210px]",
-	"top-[310px] left-[348px]",
-	"top-[210px] left-[348px]",
-	"top-[110px] left-[348px]",
-	"top-[10px] left-[348px]",
+	"absolute top-[164px] left-[130px] md:left-[110px] w-12 h-18 md:w-16 md:h-24 hover:scale-125 hover:z-30",
+	"absolute top-[164px] left-[130px] md:left-[110px] rotate-90 w-12 h-18 md:w-16 md:h-24 hover:scale-125 hover:z-30",
+	"absolute top-[40px] left-[130px] md:left-[110px] w-12 h-18 md:w-16 md:h-24 hover:scale-125 hover:z-30",
+	"absolute top-[290px] left-[130px] md:left-[110px] w-12 h-18 md:w-16 md:h-24 hover:scale-125 hover:z-30",
+	"absolute top-[164px] left-[50px]  md:left-[10px] w-12 h-18 md:w-16 md:h-24 hover:scale-125 hover:z-30",
+	"absolute top-[164px] left-[210px] w-12 h-18 md:w-16 md:h-24 hover:scale-125 hover:z-30",
+	"absolute top-[310px] left-[328px] md:left-[348px] w-12 h-18 md:w-16 md:h-24 hover:scale-125 hover:z-30",
+	"absolute top-[210px] left-[328px] md:left-[348px] w-12 h-18 md:w-16 md:h-24 hover:scale-125 hover:z-30",
+	"absolute top-[110px] left-[328px] md:left-[348px] w-12 h-18 md:w-16 md:h-24 hover:scale-125 hover:z-30",
+	"absolute top-[10px] left-[328px] md:left-[348px] w-12 h-18 md:w-16 md:h-24 hover:scale-125 hover:z-30",
 }
 
 var smallCardPositions = []string{
