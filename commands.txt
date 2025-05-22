@@ -1,0 +1,8 @@
+fly deploy
+
+docker build -t tarot-webserver .
+
+go run cmd/generateHTML/main.go
+go run cmd/MadameAI/main.go
+go run cmd/webserver/main.go
+go run cmd/generateReading/main.go

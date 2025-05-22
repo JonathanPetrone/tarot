@@ -31,6 +31,7 @@ func main() {
 	mux.HandleFunc("/readings", server.ZodiacGridHandler)
 	mux.HandleFunc("/askthetarot", server.ServeAskTheTarot)
 	mux.HandleFunc("/ask-1-card", server.ServeAskOneCard)
+	mux.HandleFunc("/card-meaning", server.HandleCardMeaning)
 	mux.HandleFunc("/", server.ServeStart)
 	mux.HandleFunc("/home", server.ServeHome)
 	mux.HandleFunc("/admin", server.ServeStartAdmin)

@@ -21,11 +21,12 @@ type MonthlyReading struct {
 }
 
 type Card struct {
-	Title         string
-	Description   string
-	Image         string
-	Position      string
-	SmallPosition string
+	Title          string
+	Description    string
+	GeneralMeaning string
+	Image          string
+	Position       string
+	SmallPosition  string
 }
 
 type SmallCard struct {

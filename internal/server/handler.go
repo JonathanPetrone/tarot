@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"net/url"
+	"regexp"
 	"strings"
 
 	"github.com/jonathanpetrone/aitarot/internal/tarot"
@@ -82,7 +84,7 @@ func ServeAskOneCard(w http.ResponseWriter, r *http.Request) {
 			<h4 class="text-xl mb-2">Love:</h4>
 			<p class="mb-6">{{.Love}}</p>
 			<h4 class="text-xl mb-2">Career:</h4>
-			<p>{{.Career}}</p>
+			<p class="mb-4">{{.Career}}</p>
 		</div>
     `))
 
@@ -116,5 +118,62 @@ func ServeReading(w http.ResponseWriter, r *http.Request) {
 	if err := tmpl.Execute(w, nil); err != nil {
 		http.Error(w, fmt.Sprintf("Failed to render template: %v", err), http.StatusInternalServerError)
 		return
+	}
+}
+
+var cleanupPattern = regexp.MustCompile(`[^\p{L}\p{Zs}]+`) // keep only letters and spaces
+
+func cleanCardName(raw string) string {
+	// Decode URL encoding
+	decoded, _ := url.QueryUnescape(raw)
+
+	// Remove emoji, numbers, and position labels (e.g., "🌴 1. ")
+	decoded = strings.TrimSpace(decoded)
+
+	// Remove leading emoji and digits (e.g., "🌾 4. ")
+	parts := strings.SplitN(decoded, "–", 2) // keep only before the dash
+	cardPart := parts[0]
+
+	// Remove anything that's not a letter or space
+	clean := cleanupPattern.ReplaceAllString(cardPart, "")
+	return strings.TrimSpace(clean)
+}
+
+func HandleCardMeaning(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query()
+	rawName := query.Get("name")
+	id := query.Get("id")
+
+	cardName := cleanCardName(rawName)
+
+	meaning, ok := tarot.CardMeanings[cardName]
+	if !ok {
+		http.Error(w, fmt.Sprintf("Card not found: '%s'", cardName), http.StatusNotFound)
+		return
+	}
+
+	data := struct {
+		Meaning string
+		Id      string
+	}{
+		Meaning: meaning.Description,
+		Id:      id,
+	}
+
+	tmpl := template.Must(template.New("meaning").Parse(`
+    <div id="general-meaning-{{ .Id }}" x-data="{ show: true }">
+        <button 
+            @click="show = !show"
+            class="text-sm text-blue-400 underline hover:text-blue-600">
+            <span x-text="show ? 'Hide General Card Meaning' : 'Show General Card Meaning'"></span>
+        </button>
+        <div x-show="show" x-transition class="text-pink-300 italic mt-2 mb-8">
+            {{ .Meaning }}
+        </div>
+    </div>
+`))
+
+	if err := tmpl.Execute(w, data); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
