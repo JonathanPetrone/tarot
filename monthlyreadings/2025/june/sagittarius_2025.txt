@@ -1,30 +1,27 @@
 Sagittarius Monthly Reading for june 2025
 
- 1. Current Situation                   -> Knight of Swords
- 2. Challenges                          -> Ten of Cups
- 3. Strengths                           -> Two of Pentacles
- 4. What to Focus On                    -> The Chariot
- 5. Past Energy                         -> Three of Cups
- 6. Near Future                         -> Page of Pentacles
- 7. Advice                              -> Queen of Swords
- 8. External Influences                 -> Eight of Wands
- 9. Hopes and Fears                     -> Queen of Wands
-10. Likely Outcome                      -> King of Pentacles
+ 1. Current Situation                   -> Ace of Pentacles
+ 2. Challenges                          -> Judgement
+ 3. Strengths                           -> The Magician
+ 4. What to Focus On                    -> Knight of Swords
+ 5. Past Energy                         -> Strength
+ 6. Near Future                         -> Eight of Cups
+ 7. Advice                              -> Four of Cups
+ 8. External Influences                 -> The World
+ 9. Hopes and Fears                     -> Two of Swords
+10. Likely Outcome                      -> The High Priestess
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 1
-Minor Arcana Cards: 9
+Major Arcana Cards: 5
+Minor Arcana Cards: 5
 Cups: 2
-Pentacles: 3
+Pentacles: 1
 Swords: 2
-Wands: 2
+Wands: 0
+Aces: 1
 Twos: 1
-Threes: 1
+Fours: 1
 Eights: 1
-Tens: 1
-Pages: 1
 Knights: 1
-Queens: 2
-Kings: 1

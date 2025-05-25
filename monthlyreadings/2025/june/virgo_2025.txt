@@ -1,28 +1,28 @@
 Virgo Monthly Reading for june 2025
 
- 1. Current Situation                   -> Five of Pentacles
- 2. Challenges                          -> Seven of Pentacles
- 3. Strengths                           -> The Fool
- 4. What to Focus On                    -> Strength
- 5. Past Energy                         -> The Chariot
- 6. Near Future                         -> Five of Cups
- 7. Advice                              -> Knight of Cups
- 8. External Influences                 -> Four of Wands
- 9. Hopes and Fears                     -> Ace of Pentacles
-10. Likely Outcome                      -> Ten of Swords
+ 1. Current Situation                   -> The World
+ 2. Challenges                          -> Three of Swords
+ 3. Strengths                           -> Five of Wands
+ 4. What to Focus On                    -> Five of Cups
+ 5. Past Energy                         -> Page of Swords
+ 6. Near Future                         -> Four of Pentacles
+ 7. Advice                              -> Temperance
+ 8. External Influences                 -> Seven of Swords
+ 9. Hopes and Fears                     -> Nine of Wands
+10. Likely Outcome                      -> The Hierophant
 
 
 Statistics: 
 -------------
 Major Arcana Cards: 3
 Minor Arcana Cards: 7
-Cups: 2
-Pentacles: 3
-Swords: 1
-Wands: 1
-Aces: 1
+Cups: 1
+Pentacles: 1
+Swords: 3
+Wands: 2
+Threes: 1
 Fours: 1
 Fives: 2
 Sevens: 1
-Tens: 1
-Knights: 1
+Nines: 1
+Pages: 1

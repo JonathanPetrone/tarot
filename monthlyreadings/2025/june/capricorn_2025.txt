@@ -1,29 +1,28 @@
 Capricorn Monthly Reading for june 2025
 
- 1. Current Situation                   -> Knight of Cups
- 2. Challenges                          -> Ten of Swords
- 3. Strengths                           -> Six of Wands
- 4. What to Focus On                    -> Eight of Wands
- 5. Past Energy                         -> Judgement
- 6. Near Future                         -> Eight of Pentacles
- 7. Advice                              -> Page of Wands
- 8. External Influences                 -> Six of Cups
- 9. Hopes and Fears                     -> Four of Wands
-10. Likely Outcome                      -> Two of Cups
+ 1. Current Situation                   -> The Empress
+ 2. Challenges                          -> Nine of Cups
+ 3. Strengths                           -> Four of Cups
+ 4. What to Focus On                    -> Nine of Wands
+ 5. Past Energy                         -> Knight of Swords
+ 6. Near Future                         -> Five of Swords
+ 7. Advice                              -> Four of Wands
+ 8. External Influences                 -> Two of Wands
+ 9. Hopes and Fears                     -> Three of Wands
+10. Likely Outcome                      -> The Emperor
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 1
-Minor Arcana Cards: 9
-Cups: 3
-Pentacles: 1
-Swords: 1
+Major Arcana Cards: 2
+Minor Arcana Cards: 8
+Cups: 2
+Pentacles: 0
+Swords: 2
 Wands: 4
 Twos: 1
-Fours: 1
-Sixes: 2
-Eights: 2
-Tens: 1
-Pages: 1
+Threes: 1
+Fours: 2
+Fives: 1
+Nines: 2
 Knights: 1

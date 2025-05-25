@@ -1,29 +1,31 @@
 Scorpio Monthly Reading for june 2025
 
- 1. Current Situation                   -> Eight of Pentacles
- 2. Challenges                          -> Five of Wands
- 3. Strengths                           -> The Emperor
- 4. What to Focus On                    -> Eight of Wands
- 5. Past Energy                         -> Five of Pentacles
- 6. Near Future                         -> Ace of Wands
- 7. Advice                              -> Nine of Cups
- 8. External Influences                 -> Knight of Wands
- 9. Hopes and Fears                     -> Two of Swords
-10. Likely Outcome                      -> Four of Swords
+ 1. Current Situation                   -> Nine of Wands
+ 2. Challenges                          -> Five of Cups
+ 3. Strengths                           -> Three of Cups
+ 4. What to Focus On                    -> King of Pentacles
+ 5. Past Energy                         -> Two of Cups
+ 6. Near Future                         -> Ten of Pentacles
+ 7. Advice                              -> Eight of Cups
+ 8. External Influences                 -> Eight of Swords
+ 9. Hopes and Fears                     -> Page of Swords
+10. Likely Outcome                      -> Knight of Swords
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 1
-Minor Arcana Cards: 9
-Cups: 1
+Major Arcana Cards: 0
+Minor Arcana Cards: 10
+Cups: 4
 Pentacles: 2
-Swords: 2
-Wands: 4
-Aces: 1
+Swords: 3
+Wands: 1
 Twos: 1
-Fours: 1
-Fives: 2
+Threes: 1
+Fives: 1
 Eights: 2
 Nines: 1
+Tens: 1
+Pages: 1
 Knights: 1
+Kings: 1

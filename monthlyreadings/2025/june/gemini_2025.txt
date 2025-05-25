@@ -1,28 +1,27 @@
 Gemini Monthly Reading for june 2025
 
- 1. Current Situation                   -> The Sun
- 2. Challenges                          -> Ten of Wands
- 3. Strengths                           -> Queen of Wands
- 4. What to Focus On                    -> Seven of Cups
- 5. Past Energy                         -> Knight of Swords
- 6. Near Future                         -> Ten of Pentacles
- 7. Advice                              -> The Hermit
- 8. External Influences                 -> Two of Swords
- 9. Hopes and Fears                     -> Three of Wands
-10. Likely Outcome                      -> Seven of Wands
+ 1. Current Situation                   -> Ace of Wands
+ 2. Challenges                          -> Nine of Cups
+ 3. Strengths                           -> Two of Cups
+ 4. What to Focus On                    -> Ace of Swords
+ 5. Past Energy                         -> Temperance
+ 6. Near Future                         -> Five of Swords
+ 7. Advice                              -> The Emperor
+ 8. External Influences                 -> The Star
+ 9. Hopes and Fears                     -> The Hanged Man
+10. Likely Outcome                      -> Ten of Pentacles
 
 
 Statistics: 
 -------------
-Major Arcana Cards: 2
-Minor Arcana Cards: 8
-Cups: 1
+Major Arcana Cards: 4
+Minor Arcana Cards: 6
+Cups: 2
 Pentacles: 1
 Swords: 2
-Wands: 4
+Wands: 1
+Aces: 2
 Twos: 1
-Threes: 1
-Sevens: 2
-Tens: 2
-Knights: 1
-Queens: 1
+Fives: 1
+Nines: 1
+Tens: 1
