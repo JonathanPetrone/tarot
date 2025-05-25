@@ -8,8 +8,6 @@ import (
 	"github.com/jonathanpetrone/aitarot/internal/server"
 )
 
-// rand.Seed() If I want predicability for testing
-
 func init() {
 	err := godotenv.Load()
 	if err != nil {
@@ -28,7 +26,7 @@ func main() {
 
 	// Dynamic routes
 	mux.HandleFunc("/reading", server.ServeReading)
-	mux.HandleFunc("/readings", server.ZodiacGridHandler)
+	mux.HandleFunc("/monthlyreadings", server.MonthlyReadingsHandler)
 	mux.HandleFunc("/askthetarot", server.ServeAskTheTarot)
 	mux.HandleFunc("/ask-1-card", server.ServeAskOneCard)
 	mux.HandleFunc("/card-meaning", server.HandleCardMeaning)

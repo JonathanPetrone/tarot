@@ -9,11 +9,20 @@ import (
 	"strings"
 
 	"github.com/jonathanpetrone/aitarot/internal/tarot"
+	"github.com/jonathanpetrone/aitarot/internal/timeutil"
 )
 
 func ServeStart(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
-	data := struct{ Title string }{Title: "AI Tarot"}
+	data := struct {
+		Title string
+		Year  string
+		Month string
+	}{
+		Title: "AI Tarot",
+		Year:  timeutil.CurrentTime.Year,
+		Month: timeutil.CurrentTime.Month,
+	}
 	tmpl.Execute(w, data)
 }
 
@@ -25,7 +34,8 @@ func ServeStartAdmin(w http.ResponseWriter, r *http.Request) {
 
 func ServeAdminCreateNewReadings(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/admin_new_readings.html"))
-	tmpl.Execute(w, nil)
+	tmpl.
+		Execute(w, nil)
 }
 
 func ServeAdminEditReadings(w http.ResponseWriter, r *http.Request) {
@@ -43,10 +53,47 @@ func ServeHome(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
-func ZodiacGridHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/zodiac_signs.html"))
-	tmpl.Execute(w, nil)
+// zodiac
+func MonthlyReadingsHandler(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query()
+	year := query.Get("year")
+	month := query.Get("month")
+
+	tmpl := template.Must(template.ParseFiles("templates/monthly_readings.html"))
+
+	data := struct {
+		Year  string
+		Month string
+	}{
+		Year:  year,
+		Month: month,
+	}
+
+	tmpl.Execute(w, data)
 }
+
+/*
+func MonthlyReadingsHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/zodiac_signs.html"))
+
+	monthParam := r.URL.Query().Get("month") // e.g., "2025-05"
+	parts := strings.Split(monthParam, "-")
+	if len(parts) != 2 {
+		http.Error(w, "Invalid month", http.StatusBadRequest)
+		return
+	}
+
+	data := struct {
+		Year  string
+		Month string
+	}{
+		Year:  parts[0],
+		Month: parts[1],
+	}
+
+	tmpl.Execute(w, data)
+}
+*/
 
 func ServeAskTheTarot(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/ask_the_tarot.html"))
