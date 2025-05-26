@@ -62,11 +62,23 @@ func MonthlyReadingsHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/monthly_readings.html"))
 
 	data := struct {
-		Year  string
-		Month string
+		Year          string
+		Month         string
+		YearCurrent   string
+		MonthCurrent  string
+		YearPast      string
+		MonthPast     string
+		YearUpcoming  string
+		MonthUpcoming string
 	}{
-		Year:  year,
-		Month: month,
+		Year:          year,
+		Month:         month,
+		YearCurrent:   timeutil.CurrentTime.Year,
+		MonthCurrent:  timeutil.CurrentTime.Month,
+		YearPast:      timeutil.Past.Year,
+		MonthPast:     timeutil.Past.Month,
+		YearUpcoming:  timeutil.Upcoming.Year,
+		MonthUpcoming: timeutil.Upcoming.Month,
 	}
 
 	tmpl.Execute(w, data)

@@ -15,9 +15,10 @@
                 name="month"
                 class="bg-pink-300 text-gray-800 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-                <option value="April" disabled class="text-gray-800">April - {{ .Year }}</option>
-                <option value="May" selected>{{ .Month }} - {{ .Year }}</option>
-                <option value="June">June - {{ .Year }}</option>
+                <option value="Switch month" class="text-gray-800">Pick your month</option>
+                <option value="{{ .MonthPast }}" disabled class="text-gray-800">{{ .MonthPast }} - {{ .YearPast }}</option>
+                <option value="{{ .MonthCurrent }}">{{ .MonthCurrent }} - {{ .YearCurrent }}</option>
+                <option value="{{ .MonthUpcoming }}">{{ .MonthUpcoming }} - {{ .YearUpcoming }}</option>
             </select>
             </form>
       </div>
