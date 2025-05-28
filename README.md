@@ -15,3 +15,6 @@ I wanted to create an interesting project with the stack Go, HTMX and Tailwind, 
 ## Challenges
 - The unpredictability of generated content
 - Getting a nicer looking UI for mobile to be consistent with desktop
+
+## Contributing
+Currently I'm not considering this to be developed more.
