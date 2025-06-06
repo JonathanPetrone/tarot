@@ -21,21 +21,26 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	// Serve static assets (must come first and be more specific)
+	// Serve static assets
 	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("templates/assets"))))
 
-	// Dynamic routes
-	mux.HandleFunc("/reading", server.ServeReading)
-	mux.HandleFunc("/monthlyreadings", server.MonthlyReadingsHandler)
-	mux.HandleFunc("/askthetarot", server.ServeAskTheTarot)
-	mux.HandleFunc("/ask-1-card", server.ServeAskOneCard)
-	mux.HandleFunc("/card-meaning", server.HandleCardMeaning)
+	// Public routes
 	mux.HandleFunc("/", server.ServeStart)
 	mux.HandleFunc("/home", server.ServeHome)
+	mux.HandleFunc("/monthlyreadings", server.MonthlyReadingsHandler)
+	mux.HandleFunc("/reading", server.ServeReading)
+	mux.HandleFunc("/ask-1-card", server.ServeAskOneCard)
+	mux.HandleFunc("/card-meaning", server.HandleCardMeaning)
+	mux.HandleFunc("/askthetarot", server.ServeAskTheTarot)
+
+	// Admin routes
 	mux.HandleFunc("/admin", server.ServeStartAdmin)
 	mux.HandleFunc("/admin/createreadings", server.ServeAdminCreateNewReadings)
 	mux.HandleFunc("/admin/editreadings", server.ServeAdminEditReadings)
 	mux.HandleFunc("/admin/home", server.ServeAdminHome)
+
+	// Protected routes
+	// mux.HandleFunc("/dashboard", authService.RequireAuth(server.ServeDashboard))
 
 	httpServer := &http.Server{
 		Handler: mux,

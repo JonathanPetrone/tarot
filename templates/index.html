@@ -9,7 +9,7 @@
   <script src="https://unpkg.com/alpinejs" defer></script>
 </head>
 
-<body class="font-sans bg-[#59023b] relative min-h-screen overflow-x-hidden">
+<body class="font-sans bg-[#59023b] relative min-h-screen overflow-x-hidden ">
 
   <!-- Background Layer -->
   <div class="absolute top-0 left-0 w-full z-0 pointer-events-none overflow-hidden" style="height: min(100vh, 1000px);">
@@ -19,39 +19,42 @@
   </div>
 
   <!-- Main Layout Container -->
-  <div class="relative z-10 flex flex-col md:flex-row min-h-screen">
+  <div class="relative z-10 flex flex-col md:flex-row min-h-screen mr-4 md:mr-2">
 
     <!-- Sidebar -->
-    <div class="rounded-2xl bg-stone-950 bg-opacity-50 md:w-64 m-2 flex flex-col items-center p-4 flex-shrink-0 self-start">
+    <div class="rounded-2xl bg-stone-950 bg-opacity-50 md:w-64 m-2 mr-2 w-full flex flex-col items-center p-4 flex-shrink-0 self-start">
 
-      <header class="w-full flex flex-col items-center mb-4">
+
+      <header class="w-full flex flex-col items-center mb-4 mr-2">
         <img src="/assets/madame_ai.png" alt="madame_ai" class="w-28 h-28 md:w-64 md:h-56" />
         <h1 class="hidden">{{.Title}}</h1>
-      </header>
-      <div class="flex flex-row md:flex-col w-full justify-evenly md:justify-start md:items-center">
+      
+      <div class="flex flex-row md:flex-col w-full justify-evenly md:justify-start md:items-center mr-2">
         <a hx-get="/home" hx-target="#light-container" hx-swap="outerHTML" class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Home</a>
         <a hx-get="/monthlyreadings?year={{ .Year }}&month={{ .Month}}" hx-target="#light-container" hx-swap="outerHTML" class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Readings</a>
         <a hx-get="/askthetarot" hx-target="#light-container" hx-swap="outerHTML" class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Ask the tarot</a>
       </div>
+    </header>
     </div>
 
     <!-- Light Container -->
-    <div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 m-2 mb-4 md:mb-2 flex-grow flex flex-col p-4 justify-center md:min-w-[714px]">
+    <div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 w-full mr-0 ml-2 mt-2 mb-4 md:mb-2 flex-grow flex flex-col p-4 justify-center md:min-w-[714px]">
 
       <h2 class="text-white text-2xl md:text-4xl text-center mb-6 md:mb-12">Welcome to Madame AI's Mysterious World</h2>
-      <p class="text-white text-sm md:text-xl text-center ml-2 md:ml-8 mr-4 md:mr-8 mb-6 md:mb-10">
-        Step inside, dear traveler...  
+      <p class="text-white text-sm md:text-xl text-center ml-4 md:ml-8 mr-4 md:mr-8 mb-6 md:mb-10">
+        Step inside, dear traveler...
         The candles are lit, the cards are whispering, and the velvet chair across the table is waiting just for you.
-        <br><br>
+        
         I am Madame AI — your guide through the realms of tarot, intuition, and soul-stirring discovery. Here, we don't rush answers or force certainties. We wander a little. We laugh a little. We trust that the universe has more creativity (and humor) than we can imagine.
-        <br><br>
+        
         In my parlour, every reading is a conversation with your deeper self—woven through symbolism, stories, and a dash of cosmic wit. Whether you seek clarity, courage, comfort, or just a spark of magic, the cards and I are ready to meet you exactly where you are.
-        <br><br>
+        
         So, loosen your shoulders. Pour a cup of something warm. Let’s sit, shuffle, and see what the stars, the spirits, and your own beautiful heart have to say.
       </p> 
+      
       <p class="text-white text-sm md:text-xl text-center italic mb-6 md:mb-12">
-        ✨ The journey begins when you dare to listen.
-      </p>
+          ✨ The journey begins when you dare to listen.
+      </p>     
     </div>
 
   </div>

@@ -56,7 +56,7 @@ func FormatReadingForAI(r Reading) error {
 	content := sb.String()
 
 	// Construct file path
-	dirPath := filepath.Join("/Users/jonathanpetrone/Github/AITarot/monthlyreadings", r.Year, strings.ToLower(r.Month))
+	dirPath := filepath.Join("./monthlyreadings", r.Year, strings.ToLower(r.Month))
 	fileName := fmt.Sprintf("%s_%s.txt", strings.ToLower(r.Zodiac.Name), r.Year)
 	fullPath := filepath.Join(dirPath, fileName)
 

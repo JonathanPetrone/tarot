@@ -1,8 +1,28 @@
+---DEPLOYMENT---
+# Deploy
 fly deploy
 
+# Build image
 docker build -t tarot-webserver .
 
-go run cmd/generateHTML/main.go
-go run cmd/MadameAI/main.go
-go run cmd/webserver/main.go
+
+---MAIN APP---
+# Draw cards for a reading
 go run cmd/generateReading/main.go
+
+# Send reading to MadameAI for interpretation
+go run cmd/MadameAI/main.go
+
+# Generate HTML from MadameAI responses
+go run cmd/generateHTML/main.go
+
+# Run the application
+go run cmd/webserver/main.go
+
+
+---SQL & DATABASE---
+# Run migration
+goose -dir internal/sql/migrations postgres "postgres://jonathanpetrone@localhost:5432/aitarot" up
+
+# Rollback the last migration
+goose -dir internal/sql/migrations postgres "postgres://jonathanpetrone@localhost:5432/aitarot" down
