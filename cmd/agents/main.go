@@ -8,6 +8,7 @@ import (
 
 	"github.com/joho/godotenv"
 	aihandler "github.com/jonathanpetrone/aitarot/internal/ai-handler"
+	htmlhandler "github.com/jonathanpetrone/aitarot/internal/html-handler"
 )
 
 func init() {
@@ -18,6 +19,8 @@ func init() {
 }
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+
 	if len(os.Args) < 4 {
 		fmt.Printf("Usage: %s <sign> <year> <month>\n", os.Args[0])
 		os.Exit(1)
@@ -46,5 +49,12 @@ func main() {
 	if agent == "qualityagent" {
 		fmt.Printf("🧹 Reviewing and updating text from... %s %s %s...\n", sign, month, year)
 		aihandler.GetQualityReview(apiKey, year, month)
+
+		err := htmlhandler.UpdateHTMLFromQualityAgent(year, month)
+		if err != nil {
+			log.Fatal("Failed to update HTML:", err)
+		}
+
+		log.Println("✅ Update process completed successfully")
 	}
 }

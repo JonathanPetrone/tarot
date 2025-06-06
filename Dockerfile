@@ -30,7 +30,12 @@ COPY --from=builder /app/.env .env
 # Copy the templates and static assets
 COPY --from=builder /app/templates ./templates
 COPY --from=builder /app/monthlyreadings ./monthlyreadings
-COPY --from=builder /app/cmd/MadameAI ./MadameAI
+
+# Copy the MadameAI generated content (if it exists)
+COPY --from=builder /app/MadameAI ./MadameAI
+
+# Copy QualityAgent content (if it exists)
+COPY --from=builder /app/QualityAgent ./QualityAgent
 
 # Expose port
 EXPOSE 8080
