@@ -27,6 +27,7 @@ type SignUpdate struct {
 }
 
 // getQualityAgentFilePath builds the path to the quality agent output file
+// Fixed to handle case sensitivity and match your actual file structure
 func getQualityAgentFilePath(year, month string) string {
 	basePath, err := os.Getwd()
 	if err != nil {
@@ -34,9 +35,21 @@ func getQualityAgentFilePath(year, month string) string {
 		return ""
 	}
 
-	// Assuming the quality agent output is in QualityAgent folder
-	filePath := filepath.Join(basePath, "QualityAgent", year, month, fmt.Sprintf("%s_review.json", month))
-	return filePath
+	// Try different case combinations to find the file
+	possiblePaths := []string{
+		filepath.Join(basePath, "QualityAgent", year, strings.Title(month), fmt.Sprintf("%s_review.json", strings.Title(month))),
+		filepath.Join(basePath, "QualityAgent", year, month, fmt.Sprintf("%s_review.json", month)),
+		filepath.Join(basePath, "QualityAgent", year, strings.ToUpper(month), fmt.Sprintf("%s_review.json", strings.ToUpper(month))),
+	}
+
+	for _, path := range possiblePaths {
+		if _, err := os.Stat(path); err == nil {
+			return path
+		}
+	}
+
+	// Return the first path as fallback
+	return possiblePaths[0]
 }
 
 // parseQualityAgentResponse extracts content from the quality agent JSON and parses it into sign updates
@@ -60,66 +73,75 @@ func parseQualityAgentResponse(filePath string) ([]SignUpdate, error) {
 }
 
 // parseSignUpdates parses the content string into individual sign updates
+// Fixed to properly handle empty summaries and complex formatting
 func parseSignUpdates(content string) []SignUpdate {
 	var updates []SignUpdate
 
-	// Split content by "Sign:" to get individual sign sections
+	// Split by "Sign: " and process each section
 	sections := strings.Split(content, "Sign: ")
 
 	for _, section := range sections {
-		if strings.TrimSpace(section) == "" {
+		section = strings.TrimSpace(section)
+		if section == "" {
 			continue
 		}
 
+		// Find the sign name (first line)
 		lines := strings.Split(section, "\n")
 		if len(lines) == 0 {
 			continue
 		}
 
-		// First line should contain the sign name
 		signName := strings.TrimSpace(lines[0])
 		if signName == "" {
 			continue
 		}
 
+		// Join the rest of the content
+		restContent := strings.Join(lines[1:], "\n")
+
 		var summary, finalWhisper string
-		var currentSection string
-		var currentText strings.Builder
 
-		for i := 1; i < len(lines); i++ {
-			line := strings.TrimSpace(lines[i])
+		// Find the indices of "Summary:" and "Final Whisper:"
+		summaryIndex := strings.Index(restContent, "Summary:")
+		finalWhisperIndex := strings.Index(restContent, "Final Whisper:")
 
-			if line == "Summary:" {
-				// Save previous section if exists
-				if currentSection == "Final Whisper:" {
-					finalWhisper = strings.TrimSpace(currentText.String())
-				}
-				currentSection = "Summary:"
-				currentText.Reset()
-			} else if line == "Final Whisper:" {
-				// Save summary section
-				if currentSection == "Summary:" {
-					summary = strings.TrimSpace(currentText.String())
-				}
-				currentSection = "Final Whisper:"
-				currentText.Reset()
-			} else if line != "" {
-				// Add content to current section
-				if currentText.Len() > 0 {
-					currentText.WriteString(" ")
-				}
-				currentText.WriteString(line)
-			}
+		if summaryIndex >= 0 && finalWhisperIndex >= 0 {
+			// Both exist - extract summary between "Summary:" and "Final Whisper:"
+			summaryStart := summaryIndex + len("Summary:")
+			summaryContent := restContent[summaryStart:finalWhisperIndex]
+			summary = strings.TrimSpace(summaryContent)
+
+			// Extract final whisper after "Final Whisper:"
+			finalWhisperStart := finalWhisperIndex + len("Final Whisper:")
+			finalWhisperContent := restContent[finalWhisperStart:]
+			finalWhisper = strings.TrimSpace(finalWhisperContent)
+
+		} else if finalWhisperIndex >= 0 {
+			// Only final whisper exists
+			finalWhisperStart := finalWhisperIndex + len("Final Whisper:")
+			finalWhisperContent := restContent[finalWhisperStart:]
+			finalWhisper = strings.TrimSpace(finalWhisperContent)
+
+		} else if summaryIndex >= 0 {
+			// Only summary exists
+			summaryStart := summaryIndex + len("Summary:")
+			summaryContent := restContent[summaryStart:]
+			summary = strings.TrimSpace(summaryContent)
 		}
 
-		// Save the last section
-		if currentSection == "Final Whisper:" {
-			finalWhisper = strings.TrimSpace(currentText.String())
-		} else if currentSection == "Summary:" {
-			summary = strings.TrimSpace(currentText.String())
-		}
+		// Clean up extra whitespace
+		summary = regexp.MustCompile(`\s+`).ReplaceAllString(summary, " ")
+		finalWhisper = regexp.MustCompile(`\s+`).ReplaceAllString(finalWhisper, " ")
+		summary = strings.TrimSpace(summary)
+		finalWhisper = strings.TrimSpace(finalWhisper)
 
-		// Only add if we have valid content
+		// Debug output
+		log.Printf("Parsed sign: %s", signName)
+		log.Printf("  Summary: '%s'", summary)
+		log.Printf("  Final Whisper: '%s'", finalWhisper)
+
+		// Add to updates if we have content
 		if signName != "" && (summary != "" || finalWhisper != "") {
 			updates = append(updates, SignUpdate{
 				Sign:         signName,
@@ -147,30 +169,30 @@ func extractExistingSummaryAndWhisper(filePath string) (summary, finalWhisper st
 
 	htmlContent := string(content)
 
-	// Extract summary - look for the paragraph after the h2 title
-	summaryRegex := regexp.MustCompile(`<h2[^>]*>Monthly Reading for[^<]*</h2>\s*<p[^>]*class="text-white[^"]*"[^>]*>(.*?)</p>`)
+	// Extract summary - look for the paragraph with id="summary"
+	summaryRegex := regexp.MustCompile(`<p[^>]*id="summary"[^>]*>(.*?)</p>`)
 	summaryMatch := summaryRegex.FindStringSubmatch(htmlContent)
 	if len(summaryMatch) > 1 {
 		// Decode HTML entities and clean up
 		summary = strings.ReplaceAll(summaryMatch[1], "&#39;", "'")
 		summary = strings.ReplaceAll(summary, "&quot;", "\"")
+		summary = strings.ReplaceAll(summary, "&amp;", "&")
 		summary = strings.TrimSpace(summary)
 	}
 
-	// Extract final whisper - look for content after "Madame's Final Whisper"
-	whisperRegex := regexp.MustCompile(`<h3[^>]*>🌟 Madame's Final Whisper</h3>\s*<p[^>]*>(.*?)</p>`)
+	// Extract final whisper - look for the paragraph with id="final_whisper"
+	whisperRegex := regexp.MustCompile(`<p[^>]*id="final_whisper"[^>]*>(.*?)</p>`)
 	whisperMatch := whisperRegex.FindStringSubmatch(htmlContent)
 	if len(whisperMatch) > 1 {
 		// Decode HTML entities and clean up
 		finalWhisper = strings.ReplaceAll(whisperMatch[1], "&#39;", "'")
 		finalWhisper = strings.ReplaceAll(finalWhisper, "&quot;", "\"")
+		finalWhisper = strings.ReplaceAll(finalWhisper, "&amp;", "&")
 		finalWhisper = strings.TrimSpace(finalWhisper)
 	}
 
 	return summary, finalWhisper, nil
 }
-
-// updateHTMLContent updates the HTML content with new summary and/or final whisper
 func updateHTMLContent(filePath, newSummary, newFinalWhisper string) error {
 	content, err := os.ReadFile(filePath)
 	if err != nil {
@@ -181,31 +203,42 @@ func updateHTMLContent(filePath, newSummary, newFinalWhisper string) error {
 
 	// Update summary if provided
 	if newSummary != "" {
-		// Escape quotes for HTML
 		escapedSummary := strings.ReplaceAll(newSummary, "'", "&#39;")
 		escapedSummary = strings.ReplaceAll(escapedSummary, "\"", "&quot;")
 
-		summaryRegex := regexp.MustCompile(`(<h2[^>]*>Monthly Reading for[^<]*</h2>\s*<p[^>]*class="text-white[^"]*"[^>]*>)(.*?)(</p>)`)
-		htmlContent = summaryRegex.ReplaceAllString(htmlContent, "${1}"+escapedSummary+"${3}")
+		// Fixed regex - more flexible attribute matching
+		summaryRegex := regexp.MustCompile(`(?s)(<p[^>]*\bid="summary"[^>]*>)(.*?)(</p>)`)
+		if summaryRegex.MatchString(htmlContent) {
+			htmlContent = summaryRegex.ReplaceAllString(htmlContent, "${1}"+escapedSummary+"${3}")
+			log.Printf("✅ Updated summary in %s", filePath)
+		} else {
+			log.Printf("❌ Summary regex didn't match in %s", filePath)
+		}
 	}
 
 	// Update final whisper if provided
 	if newFinalWhisper != "" {
-		// Escape quotes for HTML
 		escapedWhisper := strings.ReplaceAll(newFinalWhisper, "'", "&#39;")
 		escapedWhisper = strings.ReplaceAll(escapedWhisper, "\"", "&quot;")
 
-		whisperRegex := regexp.MustCompile(`(<h3[^>]*>🌟 Madame's Final Whisper</h3>\s*<p[^>]*>)(.*?)(</p>)`)
-		htmlContent = whisperRegex.ReplaceAllString(htmlContent, "${1}"+escapedWhisper+"${3}")
+		// Fixed regex for final whisper too
+		whisperRegex := regexp.MustCompile(`(?s)(<p[^>]*\bid="final_whisper"[^>]*>)(.*?)(</p>)`)
+		if whisperRegex.MatchString(htmlContent) {
+			htmlContent = whisperRegex.ReplaceAllString(htmlContent, "${1}"+escapedWhisper+"${3}")
+			log.Printf("✅ Updated final whisper in %s", filePath)
+		} else {
+			log.Printf("❌ Final whisper regex didn't match in %s", filePath)
+		}
 	}
 
-	// Write updated content back to file
 	return os.WriteFile(filePath, []byte(htmlContent), 0644)
 }
 
 // UpdateHTMLFromQualityAgent updates HTML files with quality agent improvements
 func UpdateHTMLFromQualityAgent(year, month string) error {
 	qualityAgentPath := getQualityAgentFilePath(year, month)
+
+	log.Printf("Looking for quality agent file at: %s", qualityAgentPath)
 
 	// Check if quality agent file exists
 	if _, err := os.Stat(qualityAgentPath); os.IsNotExist(err) {
@@ -220,9 +253,16 @@ func UpdateHTMLFromQualityAgent(year, month string) error {
 
 	log.Printf("Found %d sign updates in quality agent file", len(updates))
 
+	if len(updates) == 0 {
+		log.Printf("No updates found in quality agent file")
+		return nil
+	}
+
 	// Process each sign update
 	for _, update := range updates {
 		htmlFilePath := getExistingHTMLFilePath(update.Sign, year, month)
+
+		log.Printf("Processing %s: %s", update.Sign, htmlFilePath)
 
 		// Check if HTML file exists
 		if _, err := os.Stat(htmlFilePath); os.IsNotExist(err) {
@@ -245,12 +285,16 @@ func UpdateHTMLFromQualityAgent(year, month string) error {
 			needsUpdate = true
 			newSummary = update.Summary
 			log.Printf("📝 Summary update needed for %s", update.Sign)
+			log.Printf("  Old: %s", existingSummary[:min(50, len(existingSummary))]+"...")
+			log.Printf("  New: %s", newSummary[:min(50, len(newSummary))]+"...")
 		}
 
 		if update.FinalWhisper != "" && update.FinalWhisper != existingWhisper {
 			needsUpdate = true
 			newWhisper = update.FinalWhisper
 			log.Printf("📝 Final whisper update needed for %s", update.Sign)
+			log.Printf("  Old: %s", existingWhisper[:min(50, len(existingWhisper))]+"...")
+			log.Printf("  New: %s", newWhisper[:min(50, len(newWhisper))]+"...")
 		}
 
 		// Apply updates if needed
@@ -267,4 +311,12 @@ func UpdateHTMLFromQualityAgent(year, month string) error {
 	}
 
 	return nil
+}
+
+// Helper function for min
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }

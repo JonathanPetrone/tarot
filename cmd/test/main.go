@@ -15,6 +15,12 @@ func init() {
 }
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	htmlhandler.UpdateHTMLFromQualityAgent("2025", "May")
+	err := htmlhandler.UpdateHTMLFromQualityAgent("2025", "june")
+	if err != nil {
+		log.Fatal("Failed to update HTML:", err)
+	}
+
+	log.Println("✅ Update process completed successfully")
 }

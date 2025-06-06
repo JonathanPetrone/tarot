@@ -44,7 +44,7 @@ func main() {
 	}
 
 	if agent == "qualityagent" {
-		fmt.Printf("🧹 Cleaning text from... %s %s %s...\n", sign, month, year)
+		fmt.Printf("🧹 Reviewing and updating text from... %s %s %s...\n", sign, month, year)
 		aihandler.GetQualityReview(apiKey, year, month)
 	}
 }
