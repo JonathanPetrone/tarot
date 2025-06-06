@@ -84,31 +84,13 @@ func MonthlyReadingsHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, data)
 }
 
-/*
-func MonthlyReadingsHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/zodiac_signs.html"))
-
-	monthParam := r.URL.Query().Get("month") // e.g., "2025-05"
-	parts := strings.Split(monthParam, "-")
-	if len(parts) != 2 {
-		http.Error(w, "Invalid month", http.StatusBadRequest)
-		return
-	}
-
-	data := struct {
-		Year  string
-		Month string
-	}{
-		Year:  parts[0],
-		Month: parts[1],
-	}
-
-	tmpl.Execute(w, data)
-}
-*/
-
 func ServeAskTheTarot(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/ask_the_tarot.html"))
+	tmpl.Execute(w, nil)
+}
+
+func ServeLoginUser(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/login_user.html"))
 	tmpl.Execute(w, nil)
 }
 

@@ -1,11 +1,11 @@
 {{ define "reading" }}
-<div id="light-container" class="rounded-2xl w-full bg-slate-100 bg-opacity-10 m-2 flex-grow flex flex-col p-4 justify-center md:min-w-[744px]"> 
+<div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 w-full mr-0 ml-2 mt-2 mb-4 md:mb-2 flex-grow flex flex-col p-4 justify-center md:min-w-[714px]"> 
 
     <!-- Heading -->
     <h2 class="text-white md:text-4xl mb-4 text-2xl text-center mt-4 md:mb-12 md:ml-12 md:mr-12 md:mt-8">Monthly Reading for {{ .Sign}} - {{ .Month}} {{ .Year }}</h2>
 
     <!-- Summary Section -->
-    <p class="text-white text-l md:mb-12 md:ml-12 md:mr-12">{{ .Summary }}</p>
+    <p id="summary" class="text-white text-l md:mb-12 md:ml-12 md:mr-12">{{ .Summary }}</p>
 
     <!-- Main Layout -->
     <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6 mb-10">
@@ -66,7 +66,7 @@
         {{ end }}
     
         <h3 class="text-white text-xl md:ml-12 md:mr-12 mb-6">🌟 Madame’s Final Whisper</h3>
-        <p class="text-white md:ml-12 md:mr-12 mb-12">{{ .FinalWhispers }}</p>
+        <p id="final_whisper" class="text-white md:ml-12 md:mr-12 mb-12">{{ .FinalWhispers }}</p>
    </div>
 
 </div>

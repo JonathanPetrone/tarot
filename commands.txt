@@ -11,7 +11,7 @@ docker build -t tarot-webserver .
 go run cmd/generateReading/main.go
 
 # Send reading to MadameAI for interpretation
-go run cmd/MadameAI/main.go
+go run cmd/agents/main.go
 
 # Generate HTML from MadameAI responses
 go run cmd/generateHTML/main.go
@@ -21,6 +21,9 @@ go run cmd/webserver/main.go
 
 
 ---SQL & DATABASE---
+# Generate Go Code from SQL
+sqlc generate
+
 # Run migration
 goose -dir internal/sql/migrations postgres "postgres://jonathanpetrone@localhost:5432/aitarot" up
 

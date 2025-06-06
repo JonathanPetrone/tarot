@@ -32,6 +32,7 @@ func main() {
 	mux.HandleFunc("/ask-1-card", server.ServeAskOneCard)
 	mux.HandleFunc("/card-meaning", server.HandleCardMeaning)
 	mux.HandleFunc("/askthetarot", server.ServeAskTheTarot)
+	mux.HandleFunc("/login-user", server.ServeLoginUser)
 
 	// Admin routes
 	mux.HandleFunc("/admin", server.ServeStartAdmin)
