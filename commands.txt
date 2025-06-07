@@ -29,3 +29,14 @@ goose -dir internal/sql/migrations postgres "postgres://jonathanpetrone@localhos
 
 # Rollback the last migration
 goose -dir internal/sql/migrations postgres "postgres://jonathanpetrone@localhost:5432/aitarot" down
+
+
+---DATABASE SERVER---
+# Set .env to local
+./switch-env.sh local
+
+# Set .env to prod
+./switch-env.sh prod
+
+# Check current .env
+./switch-env.sh current
