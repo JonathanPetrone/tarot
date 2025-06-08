@@ -335,7 +335,9 @@ func HandleRegisterUser(w http.ResponseWriter, r *http.Request, db *database.Que
 	}
 
 	log.Printf("User registered successfully: %s with zodiac %s", email, zodiac.ZodiacSignEnum)
-	http.Redirect(w, r, "/login-user", http.StatusSeeOther)
+
+	tmpl := template.Must(template.ParseFiles("templates/successful_registration.html"))
+	tmpl.Execute(w, nil)
 }
 
 // Helper function to detect duplicate email errors
