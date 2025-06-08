@@ -40,6 +40,9 @@ func main() {
 	mux.HandleFunc("/admin/editreadings", server.ServeAdminEditReadings)
 	mux.HandleFunc("/admin/home", server.ServeAdminHome)
 
+	// Healthcheck
+	mux.HandleFunc("/health", server.ServeHealthCheck)
+
 	// Protected routes
 	// mux.HandleFunc("/dashboard", authService.RequireAuth(server.ServeDashboard))
 

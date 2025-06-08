@@ -1,10 +1,23 @@
 ---DEPLOYMENT---
-# Deploy
-fly deploy
+# Just deploy (most common)
+./deploy.sh 
+(runs fly deploy)
 
-# Build image
-docker build -t tarot-webserver .
+# Build Docker image only  
+./deploy.sh build
+(runs docker build -t tarot-webserver .)
 
+# Build + deploy in one command
+./deploy.sh full
+
+# Check if deployment worked
+./deploy.sh health
+
+# View logs
+./deploy.sh logs
+
+# Check app status
+./deploy.sh status
 
 ---MAIN APP---
 # Draw cards for a reading

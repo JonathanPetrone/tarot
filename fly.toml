@@ -1,15 +1,12 @@
-# fly.toml app configuration file generated for madameai-lingering-silence-1518 on 2025-05-13T20:38:52+02:00
+# fly.toml app configuration file generated for aitarot on 2025-06-08T08:10:50+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'madameai-lingering-silence-1518'
+app = 'aitarot'
 primary_region = 'arn'
 
 [build]
-
-[env]
-  PORT = '8080'
 
 [http_service]
   internal_port = 8080

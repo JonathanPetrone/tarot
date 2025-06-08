@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/jonathanpetrone/aitarot/internal/database"
 	"github.com/jonathanpetrone/aitarot/internal/tarot"
 	"github.com/jonathanpetrone/aitarot/internal/timeutil"
 )
@@ -217,4 +218,26 @@ func HandleCardMeaning(w http.ResponseWriter, r *http.Request) {
 	if err := tmpl.Execute(w, data); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+}
+
+func ServeHealthCheck(w http.ResponseWriter, r *http.Request) {
+	config, err := database.LoadConfigFromEnv()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	response := fmt.Sprintf(`Environment: %s
+Host: %s
+Port: %d
+Database: %s
+SSL Mode: %s`,
+		config.Environment,
+		config.Host,
+		config.Port,
+		config.Database,
+		config.SSLMode)
+
+	w.Header().Set("Content-Type", "text/plain")
+	w.Write([]byte(response))
 }
