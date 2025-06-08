@@ -1,13 +1,18 @@
 package server
 
 import (
+	"database/sql"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"net/url"
 	"regexp"
 	"strings"
+	"time"
 
+	"github.com/jonathanpetrone/aitarot/internal/astrology"
+	"github.com/jonathanpetrone/aitarot/internal/auth"
 	"github.com/jonathanpetrone/aitarot/internal/database"
 	"github.com/jonathanpetrone/aitarot/internal/tarot"
 	"github.com/jonathanpetrone/aitarot/internal/timeutil"
@@ -92,6 +97,11 @@ func ServeAskTheTarot(w http.ResponseWriter, r *http.Request) {
 
 func ServeLoginUser(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/login_user.html"))
+	tmpl.Execute(w, nil)
+}
+
+func ServeRegisterUser(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/register.html"))
 	tmpl.Execute(w, nil)
 }
 
@@ -240,4 +250,99 @@ SSL Mode: %s`,
 
 	w.Header().Set("Content-Type", "text/plain")
 	w.Write([]byte(response))
+}
+
+func HandleRegisterUser(w http.ResponseWriter, r *http.Request, db *database.Queries) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Parse and validate
+	email := strings.TrimSpace(strings.ToLower(r.FormValue("email")))
+	password := r.FormValue("password")
+	dateStr := r.FormValue("date_of_birth")
+
+	if !isValidEmail(email) || !isValidPassword(password) {
+		http.Error(w, "Invalid input", http.StatusBadRequest)
+		return
+	}
+
+	// Validate password using the auth package
+	passwordErrors := auth.ValidatePassword(password, email)
+	if len(passwordErrors) > 0 {
+		// Join all error messages
+		errorMsg := strings.Join(passwordErrors, "; ")
+		http.Error(w, errorMsg, http.StatusBadRequest)
+		return
+	}
+
+	// Hash password using the auth package
+	hashedPassword, err := auth.HashPassword(password)
+	if err != nil {
+		log.Printf("Password hashing failed: %v", err)
+		http.Error(w, "Registration failed", http.StatusInternalServerError)
+		return
+	}
+
+	// Convert to sql.NullTime
+	var birthDate sql.NullTime
+	if dateStr != "" {
+		parsed, err := time.Parse("2006-01-02", dateStr)
+		if err != nil {
+			http.Error(w, "Invalid date format", http.StatusBadRequest)
+			return
+		}
+		birthDate = sql.NullTime{
+			Time:  parsed,
+			Valid: true,
+		}
+	} else {
+		// If no date provided, set as null
+		birthDate = sql.NullTime{Valid: false}
+	}
+
+	var zodiac database.NullZodiacSignEnum
+	if birthDate.Valid {
+		zodiacStr := astrology.GetZodiacSign(birthDate.Time)
+		zodiac = database.NullZodiacSignEnum{
+			ZodiacSignEnum: database.ZodiacSignEnum(zodiacStr),
+			Valid:          true,
+		}
+	}
+
+	_, err = db.CreateUser(r.Context(), database.CreateUserParams{
+		Email:        email,
+		PasswordHash: hashedPassword,
+		DateOfBirth:  birthDate, // sql.NullTime
+		Zodiac:       zodiac,    // You'll need to handle this too
+	})
+
+	if err != nil {
+		log.Printf("User creation failed: %v", err)
+
+		// Check for duplicate email more specifically
+		if isDuplicateEmail(err) {
+			log.Printf("Duplicate email registration attempt: %s", email)
+			http.Error(w, "An account with this email already exists. Please try logging in instead.", http.StatusConflict)
+			return
+		}
+
+		// Other database errors
+		log.Printf("Unexpected database error during registration: %v", err)
+		http.Error(w, "Registration failed. Please try again.", http.StatusInternalServerError)
+		return
+	}
+
+	log.Printf("User registered successfully: %s with zodiac %s", email, zodiac.ZodiacSignEnum)
+	http.Redirect(w, r, "/login-user", http.StatusSeeOther)
+}
+
+// Helper function to detect duplicate email errors
+func isDuplicateEmail(err error) bool {
+	errStr := strings.ToLower(err.Error())
+	return strings.Contains(errStr, "duplicate") ||
+		strings.Contains(errStr, "unique constraint") ||
+		strings.Contains(errStr, "already exists") ||
+		strings.Contains(errStr, "violates unique constraint")
 }

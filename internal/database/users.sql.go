@@ -11,14 +11,16 @@ import (
 )
 
 const createUser = `-- name: CreateUser :one
-INSERT INTO users (email, password_hash)
-VALUES ($1, $2)
+INSERT INTO users (email, password_hash, date_of_birth, zodiac)
+VALUES ($1, $2, $3, $4)
 RETURNING id, email, created_at, updated_at
 `
 
 type CreateUserParams struct {
-	Email        string `json:"email"`
-	PasswordHash string `json:"password_hash"`
+	Email        string             `json:"email"`
+	PasswordHash string             `json:"password_hash"`
+	DateOfBirth  sql.NullTime       `json:"date_of_birth"`
+	Zodiac       NullZodiacSignEnum `json:"zodiac"`
 }
 
 type CreateUserRow struct {
@@ -29,7 +31,12 @@ type CreateUserRow struct {
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (CreateUserRow, error) {
-	row := q.db.QueryRowContext(ctx, createUser, arg.Email, arg.PasswordHash)
+	row := q.db.QueryRowContext(ctx, createUser,
+		arg.Email,
+		arg.PasswordHash,
+		arg.DateOfBirth,
+		arg.Zodiac,
+	)
 	var i CreateUserRow
 	err := row.Scan(
 		&i.ID,
@@ -55,9 +62,17 @@ FROM users
 WHERE email = $1
 `
 
-func (q *Queries) GetUserByEmail(ctx context.Context, email string) (Users, error) {
+type GetUserByEmailRow struct {
+	ID           int32        `json:"id"`
+	Email        string       `json:"email"`
+	PasswordHash string       `json:"password_hash"`
+	CreatedAt    sql.NullTime `json:"created_at"`
+	UpdatedAt    sql.NullTime `json:"updated_at"`
+}
+
+func (q *Queries) GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error) {
 	row := q.db.QueryRowContext(ctx, getUserByEmail, email)
-	var i Users
+	var i GetUserByEmailRow
 	err := row.Scan(
 		&i.ID,
 		&i.Email,

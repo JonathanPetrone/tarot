@@ -6,8 +6,107 @@ package database
 
 import (
 	"database/sql"
+	"database/sql/driver"
+	"fmt"
 	"time"
 )
+
+type AccountStatusEnum string
+
+const (
+	AccountStatusEnumActive            AccountStatusEnum = "active"
+	AccountStatusEnumInactive          AccountStatusEnum = "inactive"
+	AccountStatusEnumSuspended         AccountStatusEnum = "suspended"
+	AccountStatusEnumPendingActivation AccountStatusEnum = "pending_activation"
+	AccountStatusEnumDeleted           AccountStatusEnum = "deleted"
+)
+
+func (e *AccountStatusEnum) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = AccountStatusEnum(s)
+	case string:
+		*e = AccountStatusEnum(s)
+	default:
+		return fmt.Errorf("unsupported scan type for AccountStatusEnum: %T", src)
+	}
+	return nil
+}
+
+type NullAccountStatusEnum struct {
+	AccountStatusEnum AccountStatusEnum `json:"account_status_enum"`
+	Valid             bool              `json:"valid"` // Valid is true if AccountStatusEnum is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullAccountStatusEnum) Scan(value interface{}) error {
+	if value == nil {
+		ns.AccountStatusEnum, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.AccountStatusEnum.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullAccountStatusEnum) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return string(ns.AccountStatusEnum), nil
+}
+
+type ZodiacSignEnum string
+
+const (
+	ZodiacSignEnumAries       ZodiacSignEnum = "Aries"
+	ZodiacSignEnumTaurus      ZodiacSignEnum = "Taurus"
+	ZodiacSignEnumGemini      ZodiacSignEnum = "Gemini"
+	ZodiacSignEnumCancer      ZodiacSignEnum = "Cancer"
+	ZodiacSignEnumLeo         ZodiacSignEnum = "Leo"
+	ZodiacSignEnumVirgo       ZodiacSignEnum = "Virgo"
+	ZodiacSignEnumLibra       ZodiacSignEnum = "Libra"
+	ZodiacSignEnumScorpio     ZodiacSignEnum = "Scorpio"
+	ZodiacSignEnumSagittarius ZodiacSignEnum = "Sagittarius"
+	ZodiacSignEnumCapricorn   ZodiacSignEnum = "Capricorn"
+	ZodiacSignEnumAquarius    ZodiacSignEnum = "Aquarius"
+	ZodiacSignEnumPisces      ZodiacSignEnum = "Pisces"
+)
+
+func (e *ZodiacSignEnum) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = ZodiacSignEnum(s)
+	case string:
+		*e = ZodiacSignEnum(s)
+	default:
+		return fmt.Errorf("unsupported scan type for ZodiacSignEnum: %T", src)
+	}
+	return nil
+}
+
+type NullZodiacSignEnum struct {
+	ZodiacSignEnum ZodiacSignEnum `json:"zodiac_sign_enum"`
+	Valid          bool           `json:"valid"` // Valid is true if ZodiacSignEnum is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullZodiacSignEnum) Scan(value interface{}) error {
+	if value == nil {
+		ns.ZodiacSignEnum, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.ZodiacSignEnum.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullZodiacSignEnum) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return string(ns.ZodiacSignEnum), nil
+}
 
 type Sessions struct {
 	ID        string        `json:"id"`
@@ -17,9 +116,12 @@ type Sessions struct {
 }
 
 type Users struct {
-	ID           int32        `json:"id"`
-	Email        string       `json:"email"`
-	PasswordHash string       `json:"password_hash"`
-	CreatedAt    sql.NullTime `json:"created_at"`
-	UpdatedAt    sql.NullTime `json:"updated_at"`
+	ID            int32                 `json:"id"`
+	Email         string                `json:"email"`
+	PasswordHash  string                `json:"password_hash"`
+	DateOfBirth   sql.NullTime          `json:"date_of_birth"`
+	Zodiac        NullZodiacSignEnum    `json:"zodiac"`
+	AccountStatus NullAccountStatusEnum `json:"account_status"`
+	CreatedAt     sql.NullTime          `json:"created_at"`
+	UpdatedAt     sql.NullTime          `json:"updated_at"`
 }

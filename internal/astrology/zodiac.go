@@ -61,3 +61,31 @@ func parseDate(date string) time.Time {
 	}
 	return t
 }
+
+func GetZodiacSign(birthDate time.Time) string {
+	// Create a date in the current year for comparison
+	testDate := time.Date(time.Now().Year(), birthDate.Month(), birthDate.Day(), 0, 0, 0, 0, time.UTC)
+
+	for _, sign := range ZodiacSigns {
+		// Handle Capricorn specially (crosses year boundary)
+		if sign.Name == "Capricorn" {
+			// December dates
+			if testDate.Month() == time.December && testDate.Day() >= 22 {
+				return sign.Name
+			}
+			// January dates
+			if testDate.Month() == time.January && testDate.Day() <= 19 {
+				return sign.Name
+			}
+			continue
+		}
+
+		// For other signs, check if date is in range
+		if (testDate.After(sign.From) || testDate.Equal(sign.From)) &&
+			(testDate.Before(sign.To) || testDate.Equal(sign.To)) {
+			return sign.Name
+		}
+	}
+
+	return "Aries" // fallback
+}

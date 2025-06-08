@@ -17,7 +17,7 @@ type Querier interface {
 	DeleteUser(ctx context.Context, id int32) error
 	DeleteUserSessions(ctx context.Context, userID sql.NullInt32) error
 	GetSession(ctx context.Context, id string) (Sessions, error)
-	GetUserByEmail(ctx context.Context, email string) (Users, error)
+	GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error)
 	GetUserByID(ctx context.Context, id int32) (GetUserByIDRow, error)
 	GetUserBySession(ctx context.Context, id string) (GetUserBySessionRow, error)
 	UpdateUserPassword(ctx context.Context, arg UpdateUserPasswordParams) error
