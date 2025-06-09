@@ -39,10 +39,11 @@ sqlc generate
 
 # Run migration
 goose -dir internal/sql/migrations postgres "postgres://jonathanpetrone@localhost:5432/aitarot" up
+goose -dir internal/sql/migrations postgres "postgres://postgres.jyvadshtckocwntcktwf:YKVWNrTBVMVg8uhJ@aws-0-eu-north-1.pooler.supabase.com:6543/postgres?sslmode=require" up
 
 # Rollback the last migration
 goose -dir internal/sql/migrations postgres "postgres://jonathanpetrone@localhost:5432/aitarot" down
-
+goose -dir internal/sql/migrations postgres "postgres://postgres.jyvadshtckocwntcktwf:YKVWNrTBVMVg8uhJ@aws-0-eu-north-1.pooler.supabase.com:6543/postgres?sslmode=require" down
 
 ---DATABASE SERVER---
 # Set .env to local

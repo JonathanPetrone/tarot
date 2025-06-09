@@ -321,16 +321,29 @@ func HandleRegisterUser(w http.ResponseWriter, r *http.Request, db *database.Que
 	if err != nil {
 		log.Printf("User creation failed: %v", err)
 
-		// Check for duplicate email more specifically
 		if isDuplicateEmail(err) {
 			log.Printf("Duplicate email registration attempt: %s", email)
-			http.Error(w, "An account with this email already exists. Please try logging in instead.", http.StatusConflict)
+
+			// Render template instead of http.Error
+			tmpl := template.Must(template.ParseFiles("templates/error_registration.html"))
+			data := struct {
+				ErrorMessage string
+			}{
+				ErrorMessage: "An account with this email already exists. Please try logging in instead.",
+			}
+			tmpl.Execute(w, data)
 			return
 		}
 
-		// Other database errors
+		// Handle other database errors similarly
 		log.Printf("Unexpected database error during registration: %v", err)
-		http.Error(w, "Registration failed. Please try again.", http.StatusInternalServerError)
+		tmpl := template.Must(template.ParseFiles("templates/error_registration.html"))
+		data := struct {
+			ErrorMessage string
+		}{
+			ErrorMessage: "Registration failed. Please try again.",
+		}
+		tmpl.Execute(w, data)
 		return
 	}
 
