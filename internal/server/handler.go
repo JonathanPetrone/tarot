@@ -260,6 +260,8 @@ func HandleRegisterUser(w http.ResponseWriter, r *http.Request, db *database.Que
 
 	// Parse and validate
 	email := strings.TrimSpace(strings.ToLower(r.FormValue("email")))
+	firstname := r.FormValue("first_name")
+	lastname := r.FormValue("last_name")
 	password := r.FormValue("password")
 	dateStr := r.FormValue("date_of_birth")
 
@@ -313,6 +315,8 @@ func HandleRegisterUser(w http.ResponseWriter, r *http.Request, db *database.Que
 
 	_, err = db.CreateUser(r.Context(), database.CreateUserParams{
 		Email:        email,
+		FirstName:    firstname,
+		LastName:     lastname,
 		PasswordHash: hashedPassword,
 		DateOfBirth:  birthDate, // sql.NullTime
 		Zodiac:       zodiac,    // You'll need to handle this too

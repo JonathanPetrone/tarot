@@ -11,29 +11,37 @@ import (
 )
 
 const createUser = `-- name: CreateUser :one
-INSERT INTO users (email, password_hash, date_of_birth, zodiac)
-VALUES ($1, $2, $3, $4)
-RETURNING id, email, created_at, updated_at
+INSERT INTO users (email, password_hash, first_name, last_name, date_of_birth, zodiac)
+VALUES ($1, $2, $3, $4, $5, $6)
+RETURNING id, email, first_name, last_name, date_of_birth, zodiac, created_at, updated_at
 `
 
 type CreateUserParams struct {
 	Email        string             `json:"email"`
 	PasswordHash string             `json:"password_hash"`
+	FirstName    string             `json:"first_name"`
+	LastName     string             `json:"last_name"`
 	DateOfBirth  sql.NullTime       `json:"date_of_birth"`
 	Zodiac       NullZodiacSignEnum `json:"zodiac"`
 }
 
 type CreateUserRow struct {
-	ID        int32        `json:"id"`
-	Email     string       `json:"email"`
-	CreatedAt sql.NullTime `json:"created_at"`
-	UpdatedAt sql.NullTime `json:"updated_at"`
+	ID          int32              `json:"id"`
+	Email       string             `json:"email"`
+	FirstName   string             `json:"first_name"`
+	LastName    string             `json:"last_name"`
+	DateOfBirth sql.NullTime       `json:"date_of_birth"`
+	Zodiac      NullZodiacSignEnum `json:"zodiac"`
+	CreatedAt   sql.NullTime       `json:"created_at"`
+	UpdatedAt   sql.NullTime       `json:"updated_at"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (CreateUserRow, error) {
 	row := q.db.QueryRowContext(ctx, createUser,
 		arg.Email,
 		arg.PasswordHash,
+		arg.FirstName,
+		arg.LastName,
 		arg.DateOfBirth,
 		arg.Zodiac,
 	)
@@ -41,6 +49,10 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (CreateU
 	err := row.Scan(
 		&i.ID,
 		&i.Email,
+		&i.FirstName,
+		&i.LastName,
+		&i.DateOfBirth,
+		&i.Zodiac,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -57,17 +69,21 @@ func (q *Queries) DeleteUser(ctx context.Context, id int32) error {
 }
 
 const getUserByEmail = `-- name: GetUserByEmail :one
-SELECT id, email, password_hash, created_at, updated_at
+SELECT id, email, password_hash, first_name, last_name, date_of_birth, zodiac, created_at, updated_at
 FROM users
 WHERE email = $1
 `
 
 type GetUserByEmailRow struct {
-	ID           int32        `json:"id"`
-	Email        string       `json:"email"`
-	PasswordHash string       `json:"password_hash"`
-	CreatedAt    sql.NullTime `json:"created_at"`
-	UpdatedAt    sql.NullTime `json:"updated_at"`
+	ID           int32              `json:"id"`
+	Email        string             `json:"email"`
+	PasswordHash string             `json:"password_hash"`
+	FirstName    string             `json:"first_name"`
+	LastName     string             `json:"last_name"`
+	DateOfBirth  sql.NullTime       `json:"date_of_birth"`
+	Zodiac       NullZodiacSignEnum `json:"zodiac"`
+	CreatedAt    sql.NullTime       `json:"created_at"`
+	UpdatedAt    sql.NullTime       `json:"updated_at"`
 }
 
 func (q *Queries) GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error) {
@@ -77,6 +93,10 @@ func (q *Queries) GetUserByEmail(ctx context.Context, email string) (GetUserByEm
 		&i.ID,
 		&i.Email,
 		&i.PasswordHash,
+		&i.FirstName,
+		&i.LastName,
+		&i.DateOfBirth,
+		&i.Zodiac,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -84,16 +104,20 @@ func (q *Queries) GetUserByEmail(ctx context.Context, email string) (GetUserByEm
 }
 
 const getUserByID = `-- name: GetUserByID :one
-SELECT id, email, created_at, updated_at
+SELECT id, email, first_name, last_name, date_of_birth, zodiac, created_at, updated_at
 FROM users
 WHERE id = $1
 `
 
 type GetUserByIDRow struct {
-	ID        int32        `json:"id"`
-	Email     string       `json:"email"`
-	CreatedAt sql.NullTime `json:"created_at"`
-	UpdatedAt sql.NullTime `json:"updated_at"`
+	ID          int32              `json:"id"`
+	Email       string             `json:"email"`
+	FirstName   string             `json:"first_name"`
+	LastName    string             `json:"last_name"`
+	DateOfBirth sql.NullTime       `json:"date_of_birth"`
+	Zodiac      NullZodiacSignEnum `json:"zodiac"`
+	CreatedAt   sql.NullTime       `json:"created_at"`
+	UpdatedAt   sql.NullTime       `json:"updated_at"`
 }
 
 func (q *Queries) GetUserByID(ctx context.Context, id int32) (GetUserByIDRow, error) {
@@ -102,6 +126,10 @@ func (q *Queries) GetUserByID(ctx context.Context, id int32) (GetUserByIDRow, er
 	err := row.Scan(
 		&i.ID,
 		&i.Email,
+		&i.FirstName,
+		&i.LastName,
+		&i.DateOfBirth,
+		&i.Zodiac,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)

@@ -117,6 +117,8 @@ type Sessions struct {
 
 type Users struct {
 	ID            int32                 `json:"id"`
+	FirstName     string                `json:"first_name"`
+	LastName      string                `json:"last_name"`
 	Email         string                `json:"email"`
 	PasswordHash  string                `json:"password_hash"`
 	DateOfBirth   sql.NullTime          `json:"date_of_birth"`
