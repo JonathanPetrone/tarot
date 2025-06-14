@@ -6,8 +6,6 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"net/url"
-	"regexp"
 	"strings"
 	"time"
 
@@ -16,6 +14,7 @@ import (
 	"github.com/jonathanpetrone/aitarot/internal/database"
 	"github.com/jonathanpetrone/aitarot/internal/tarot"
 	"github.com/jonathanpetrone/aitarot/internal/timeutil"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func ServeStart(w http.ResponseWriter, r *http.Request) {
@@ -171,24 +170,6 @@ func ServeReading(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("Failed to render template: %v", err), http.StatusInternalServerError)
 		return
 	}
-}
-
-var cleanupPattern = regexp.MustCompile(`[^\p{L}\p{Zs}]+`) // keep only letters and spaces
-
-func cleanCardName(raw string) string {
-	// Decode URL encoding
-	decoded, _ := url.QueryUnescape(raw)
-
-	// Remove emoji, numbers, and position labels (e.g., "🌴 1. ")
-	decoded = strings.TrimSpace(decoded)
-
-	// Remove leading emoji and digits (e.g., "🌾 4. ")
-	parts := strings.SplitN(decoded, "–", 2) // keep only before the dash
-	cardPart := parts[0]
-
-	// Remove anything that's not a letter or space
-	clean := cleanupPattern.ReplaceAllString(cardPart, "")
-	return strings.TrimSpace(clean)
 }
 
 func HandleCardMeaning(w http.ResponseWriter, r *http.Request) {
@@ -357,11 +338,30 @@ func HandleRegisterUser(w http.ResponseWriter, r *http.Request, db *database.Que
 	tmpl.Execute(w, nil)
 }
 
-// Helper function to detect duplicate email errors
-func isDuplicateEmail(err error) bool {
-	errStr := strings.ToLower(err.Error())
-	return strings.Contains(errStr, "duplicate") ||
-		strings.Contains(errStr, "unique constraint") ||
-		strings.Contains(errStr, "already exists") ||
-		strings.Contains(errStr, "violates unique constraint")
+func ServeAttemptLoginUser(w http.ResponseWriter, r *http.Request, db *database.Queries) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	email := r.FormValue("email")
+	password := r.FormValue("password")
+
+	// Step 1: Get user from database
+	user, err := db.GetUserByEmail(r.Context(), email)
+	if err != nil {
+		// User not found or database error
+		// Don't reveal whether email exists - always say "invalid credentials"
+		http.Error(w, "Invalid email or password", http.StatusUnauthorized)
+		return
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
+	if err != nil {
+		// Password doesn't match
+		http.Error(w, "Invalid email or password", http.StatusUnauthorized)
+		return
+	}
+
+	fmt.Fprintf(w, "Login successful for user: %v, sign: %v", user.FirstName, user.Zodiac.ZodiacSignEnum)
 }

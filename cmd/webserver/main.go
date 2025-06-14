@@ -79,6 +79,9 @@ func main() {
 	mux.HandleFunc("/askthetarot", server.ServeAskTheTarot)
 	mux.HandleFunc("/login-user", server.ServeLoginUser)
 	mux.HandleFunc("/register", server.ServeRegisterUser)
+	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+		server.ServeAttemptLoginUser(w, r, db)
+	})
 	mux.HandleFunc("/create-user", func(w http.ResponseWriter, r *http.Request) {
 		server.HandleRegisterUser(w, r, db)
 	})
