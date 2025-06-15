@@ -1,20 +1,26 @@
 <!-- templates/dashboard.html - Just the content, no <html> wrapper -->
       <div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 w-full mr-0 ml-2 mt-2 mb-4 md:mb-2 flex-grow flex flex-col p-4 justify-start md:min-w-[714px]">
         
-        <div class="bg-purple-800 bg-opacity-50 p-6 rounded-lg mb-6">
+        <div class="p-6 rounded-lg mb-6 w-full flex flex-row justify-between">
+          <div>
           <h3 class="text-white text-2xl mb-4">My Vault</h3>
           <p class="text-white"><strong>Name:</strong> {{.FirstName}} {{.LastName}}</p>
           <p class="text-white"><strong>Zodiac:</strong> {{.Zodiac}}</p>
+          </div>
+
+          <div>
+            <img src="/assets/{{.Zodiac}}.png" alt="Aries Logo" class="md:w-28 md:h-28 w-20 h-20 bg-transparent" />
+          </div>
         </div>
       
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-          <div class="rounded-lg">
+          <div class="p-6 rounded-lg">
             <h4 class="text-white text-xl mb-4">Your Previous Personal Readings:</h4>
             <p class="text-white text-l">No readings yet!</p>
           </div>
           
-          <div class="rounded-lg">
+          <div class="p-6 rounded-lg">
             <h4 class="text-white text-xl mb-4">Buy Readings:</h4>
             <p class="text-white text-l">Coming soon</p>
           </div>
