@@ -17,16 +17,19 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func ServeStart(w http.ResponseWriter, r *http.Request) {
+func ServeStart(w http.ResponseWriter, r *http.Request, sessionService *auth.SessionService) {
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
+
 	data := struct {
 		Title string
 		Year  string
 		Month string
+		User  *database.GetUserBySessionRow
 	}{
 		Title: "AI Tarot",
 		Year:  timeutil.CurrentTime.Year,
 		Month: timeutil.CurrentTime.Month,
+		User:  GetCurrentUser(r, sessionService), // Clean and reusable
 	}
 	tmpl.Execute(w, data)
 }
@@ -338,7 +341,7 @@ func HandleRegisterUser(w http.ResponseWriter, r *http.Request, db *database.Que
 	tmpl.Execute(w, nil)
 }
 
-func ServeAttemptLoginUser(w http.ResponseWriter, r *http.Request, db *database.Queries) {
+func ServeAttemptLoginUser(w http.ResponseWriter, r *http.Request, db *database.Queries, sessionService *auth.SessionService) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -356,6 +359,7 @@ func ServeAttemptLoginUser(w http.ResponseWriter, r *http.Request, db *database.
 		return
 	}
 
+	// Step 2: Verify password
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
 	if err != nil {
 		// Password doesn't match
@@ -363,5 +367,92 @@ func ServeAttemptLoginUser(w http.ResponseWriter, r *http.Request, db *database.
 		return
 	}
 
-	fmt.Fprintf(w, "Login successful for user: %v, sign: %v", user.FirstName, user.Zodiac.ZodiacSignEnum)
+	// Step 3: Create session
+	sessionDuration := 7 * 24 * time.Hour // 7 days
+	sessionID, err := sessionService.CreateSession(r.Context(), user.ID, sessionDuration)
+	if err != nil {
+		log.Printf("Failed to create session: %v", err)
+		http.Error(w, "Login failed", http.StatusInternalServerError)
+		return
+	}
+
+	// Step 4: Set session cookie
+	sessionService.SetSessionCookie(w, sessionID, sessionDuration)
+
+	log.Printf("User logged in successfully: %s (ID: %d)", user.Email, user.ID)
+
+	// Step 5: Redirect to dashboard or return success response
+	// For HTMX, you might want to return a different response
+	if r.Header.Get("HX-Request") == "true" {
+		// HTMX request - return success fragment or redirect header
+		w.Header().Set("HX-Redirect", "/dashboard")
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
+	// Regular form submission - redirect
+	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+}
+
+func ServeLogout(w http.ResponseWriter, r *http.Request, sessionService *auth.SessionService) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Get session ID from cookie
+	sessionID := sessionService.GetSessionFromRequest(r)
+	if sessionID != "" {
+		// Delete session from database
+		if err := sessionService.DeleteSession(r.Context(), sessionID); err != nil {
+			log.Printf("Failed to delete session: %v", err)
+		}
+	}
+
+	// Clear session cookie
+	sessionService.ClearSessionCookie(w)
+
+	// Redirect to home page
+	if r.Header.Get("HX-Request") == "true" {
+		w.Header().Set("HX-Redirect", "/")
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func ServeDashboard(w http.ResponseWriter, r *http.Request) {
+	// Get user from context (set by middleware)
+	user := auth.GetUserFromContext(r.Context())
+	if user == nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
+	// Create dashboard data
+	data := struct {
+		Email     string
+		UserID    int32
+		LoginTime string
+	}{
+		Email:     user.Email,
+		UserID:    user.ID,
+		LoginTime: time.Now().Format("2006-01-02 15:04:05"),
+	}
+
+	tmpl := template.Must(template.ParseFiles("templates/dashboard.html"))
+	tmpl.Execute(w, data)
+}
+
+func ServeProfile(w http.ResponseWriter, r *http.Request) {
+	user := auth.GetUserFromContext(r.Context())
+	if user == nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
+	// Profile logic here
+	tmpl := template.Must(template.ParseFiles("templates/profile.html"))
+	tmpl.Execute(w, user)
 }

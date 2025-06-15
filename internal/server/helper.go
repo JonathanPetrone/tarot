@@ -1,9 +1,13 @@
 package server
 
 import (
+	"net/http"
 	"net/url"
 	"regexp"
 	"strings"
+
+	"github.com/jonathanpetrone/aitarot/internal/auth"
+	"github.com/jonathanpetrone/aitarot/internal/database"
 )
 
 var cleanupPattern = regexp.MustCompile(`[^\p{L}\p{Zs}]+`) // keep only letters and spaces
@@ -80,4 +84,15 @@ func isValidPassword(password string) bool {
 	hasNumber := regexp.MustCompile(`[\p{N}]`).MatchString(password)
 
 	return hasUpper && hasLower && hasNumber
+}
+
+func GetCurrentUser(r *http.Request, sessionService *auth.SessionService) *database.GetUserBySessionRow {
+	sessionID := sessionService.GetSessionFromRequest(r)
+	if sessionID != "" {
+		user, err := sessionService.GetUserBySession(r.Context(), sessionID)
+		if err == nil && user != nil {
+			return user
+		}
+	}
+	return nil
 }

@@ -1,15 +1,19 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
+	"github.com/jonathanpetrone/aitarot/internal/auth"
 	"github.com/jonathanpetrone/aitarot/internal/database"
 	"github.com/jonathanpetrone/aitarot/internal/server"
+	_ "github.com/lib/pq" // PostgreSQL driver
 )
 
 func init() {
@@ -41,7 +45,7 @@ func main() {
 	serverAddr := ":8080"
 	log.Printf("Starting server at port %s", serverAddr)
 
-	// Load environment variables
+	// Load environment variables (already done in init, but keeping for clarity)
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
@@ -63,14 +67,36 @@ func main() {
 
 	log.Println("Database connected successfully")
 
-	mux := http.NewServeMux()
+	// Initialize database queries
 	db := database.New(dbConn)
+
+	// Initialize auth services
+	sessionService := auth.NewSessionService(db)
+	authMiddleware := auth.NewAuthMiddleware(sessionService)
+
+	// Start session cleanup goroutine
+	go func() {
+		ticker := time.NewTicker(24 * time.Hour) // Clean up daily
+		defer ticker.Stop()
+		for {
+			select {
+			case <-ticker.C:
+				if err := sessionService.CleanupExpiredSessions(context.Background()); err != nil {
+					log.Printf("Session cleanup failed: %v", err)
+				}
+			}
+		}
+	}()
+
+	mux := http.NewServeMux()
 
 	// Serve static assets
 	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("templates/assets"))))
 
 	// Public routes
-	mux.HandleFunc("/", server.ServeStart)
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		server.ServeStart(w, r, sessionService)
+	})
 	mux.HandleFunc("/home", server.ServeHome)
 	mux.HandleFunc("/monthlyreadings", server.MonthlyReadingsHandler)
 	mux.HandleFunc("/reading", server.ServeReading)
@@ -79,8 +105,13 @@ func main() {
 	mux.HandleFunc("/askthetarot", server.ServeAskTheTarot)
 	mux.HandleFunc("/login-user", server.ServeLoginUser)
 	mux.HandleFunc("/register", server.ServeRegisterUser)
+
+	// Authentication routes - UPDATED to pass sessionService
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		server.ServeAttemptLoginUser(w, r, db)
+		server.ServeAttemptLoginUser(w, r, db, sessionService)
+	})
+	mux.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
+		server.ServeLogout(w, r, sessionService)
 	})
 	mux.HandleFunc("/create-user", func(w http.ResponseWriter, r *http.Request) {
 		server.HandleRegisterUser(w, r, db)
@@ -96,7 +127,8 @@ func main() {
 	mux.HandleFunc("/health", server.ServeHealthCheck)
 
 	// Protected routes
-	// mux.HandleFunc("/dashboard", authService.RequireAuth(server.ServeDashboard))
+	mux.HandleFunc("/dashboard", authMiddleware.RequireAuth(server.ServeDashboard))
+	mux.HandleFunc("/profile", authMiddleware.RequireAuth(server.ServeProfile))
 
 	httpServer := &http.Server{
 		Handler: mux,
