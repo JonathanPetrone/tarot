@@ -7,62 +7,68 @@ import (
 	"github.com/jonathanpetrone/aitarot/internal/database"
 )
 
-type User struct {
-	ID    int32
-	Email string
-}
-
 type contextKey string
 
-const userContextKey contextKey = "user"
+const UserContextKey contextKey = "user"
 
-// Core Middleware Function
-func RequireAuth(db *database.Queries) func(http.Handler) http.Handler {
-	return func(next http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			// Extract session ID from cookie
-			cookie, err := r.Cookie("session_id")
-			if err != nil {
-				// No session cookie, redirect to login
-				http.Redirect(w, r, "/login", http.StatusSeeOther)
-				return
-			}
+type AuthMiddleware struct {
+	sessionService *SessionService
+}
 
-			sessionID := cookie.Value
-			if sessionID == "" {
-				http.Redirect(w, r, "/login", http.StatusSeeOther)
-				return
-			}
-
-			// Get user by session from database
-			userRow, err := db.GetUserBySession(r.Context(), sessionID)
-			if err != nil {
-				// Invalid session, redirect to login
-				http.Redirect(w, r, "/login", http.StatusSeeOther)
-				return
-			}
-
-			// Create user struct
-			user := &User{
-				ID:    userRow.ID,
-				Email: userRow.Email,
-			}
-
-			// Inject user into request context
-			ctx := context.WithValue(r.Context(), userContextKey, user)
-			r = r.WithContext(ctx)
-
-			// Continue to next handler
-			next.ServeHTTP(w, r)
-		})
+func NewAuthMiddleware(sessionService *SessionService) *AuthMiddleware {
+	return &AuthMiddleware{
+		sessionService: sessionService,
 	}
 }
 
-// Supporting Functions
-func GetUserFromContext(r *http.Request) (*User, bool) {
-	user, ok := r.Context().Value(userContextKey).(*User)
-	if !ok || user == nil {
-		return nil, false
+// RequireAuth is middleware that requires authentication
+func (a *AuthMiddleware) RequireAuth(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		sessionID := a.sessionService.GetSessionFromRequest(r)
+		if sessionID == "" {
+			http.Redirect(w, r, "/login-user", http.StatusSeeOther)
+			return
+		}
+
+		user, err := a.sessionService.GetUserBySession(r.Context(), sessionID)
+		if err != nil {
+			http.Error(w, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+
+		if user == nil {
+			// Session expired or invalid
+			a.sessionService.ClearSessionCookie(w)
+			http.Redirect(w, r, "/login-user", http.StatusSeeOther)
+			return
+		}
+
+		// Add user to request context
+		ctx := context.WithValue(r.Context(), UserContextKey, user)
+		next.ServeHTTP(w, r.WithContext(ctx))
 	}
-	return user, true
+}
+
+// OptionalAuth middleware that loads user if session exists but doesn't require it
+func (a *AuthMiddleware) OptionalAuth(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		sessionID := a.sessionService.GetSessionFromRequest(r)
+		if sessionID != "" {
+			user, err := a.sessionService.GetUserBySession(r.Context(), sessionID)
+			if err == nil && user != nil {
+				ctx := context.WithValue(r.Context(), UserContextKey, user)
+				r = r.WithContext(ctx)
+			}
+		}
+		next.ServeHTTP(w, r)
+	}
+}
+
+// GetUserFromContext extracts user from request context
+func GetUserFromContext(ctx context.Context) *database.GetUserBySessionRow {
+	user, ok := ctx.Value(UserContextKey).(*database.GetUserBySessionRow)
+	if !ok {
+		return nil
+	}
+	return user
 }
