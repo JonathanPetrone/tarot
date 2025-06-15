@@ -81,17 +81,20 @@ func (q *Queries) GetSession(ctx context.Context, id string) (Sessions, error) {
 }
 
 const getUserBySession = `-- name: GetUserBySession :one
-SELECT u.id, u.email, u.created_at, u.updated_at
+SELECT u.id, u.email, u.first_name, u.last_name, u.zodiac, u.created_at, u.updated_at
 FROM users u
 JOIN sessions s ON u.id = s.user_id
 WHERE s.id = $1 AND s.expires_at > CURRENT_TIMESTAMP
 `
 
 type GetUserBySessionRow struct {
-	ID        int32        `json:"id"`
-	Email     string       `json:"email"`
-	CreatedAt sql.NullTime `json:"created_at"`
-	UpdatedAt sql.NullTime `json:"updated_at"`
+	ID        int32              `json:"id"`
+	Email     string             `json:"email"`
+	FirstName string             `json:"first_name"`
+	LastName  string             `json:"last_name"`
+	Zodiac    NullZodiacSignEnum `json:"zodiac"`
+	CreatedAt sql.NullTime       `json:"created_at"`
+	UpdatedAt sql.NullTime       `json:"updated_at"`
 }
 
 func (q *Queries) GetUserBySession(ctx context.Context, id string) (GetUserBySessionRow, error) {
@@ -100,6 +103,9 @@ func (q *Queries) GetUserBySession(ctx context.Context, id string) (GetUserBySes
 	err := row.Scan(
 		&i.ID,
 		&i.Email,
+		&i.FirstName,
+		&i.LastName,
+		&i.Zodiac,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)

@@ -32,10 +32,10 @@
       <div class="flex flex-row md:flex-col w-full justify-evenly md:justify-start md:items-center mr-2">
         <a hx-get="/home" hx-target="#light-container" hx-swap="outerHTML" class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Home</a>
         <a hx-get="/monthlyreadings?year={{ .Year }}&month={{ .Month}}" hx-target="#light-container" hx-swap="outerHTML" class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Readings</a>
-        <a hx-get="/askthetarot" hx-target="#light-container" hx-swap="outerHTML" class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Ask the tarot</a>
+        <a hx-get="/askthetarot" hx-target="#light-container" hx-swap="outerHTML" class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Ask the Tarot</a>
         {{if .User}}
         <!-- User is logged in - show dashboard link -->
-        <a hx-get="/dashboard" hx-target="#light-container" hx-swap="outerHTML" class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">Dashboard</a>
+        <a hx-get="/dashboard" hx-target="#light-container" hx-swap="outerHTML" class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-100 cursor-pointer">My Vault</a>
         <form hx-post="/logout" hx-confirm="Are you sure you want to logout?" class="inline">
           <button type="submit" class="text-white mb-4 mt-4 hover:scale-125 hover:text-yellow-300 cursor-pointer bg-purple-700 pl-4 pr-4 rounded">Logout</button>
         </form>

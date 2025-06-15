@@ -9,7 +9,7 @@ FROM sessions
 WHERE id = $1 AND expires_at > CURRENT_TIMESTAMP;
 
 -- name: GetUserBySession :one
-SELECT u.id, u.email, u.created_at, u.updated_at
+SELECT u.id, u.email, u.first_name, u.last_name, u.zodiac, u.created_at, u.updated_at
 FROM users u
 JOIN sessions s ON u.id = s.user_id
 WHERE s.id = $1 AND s.expires_at > CURRENT_TIMESTAMP;

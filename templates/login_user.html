@@ -8,7 +8,7 @@
         </div>
 
         <!-- Login Form -->
-        <form method="POST" hx-target="#light-container" action="/login" class="space-y-6">
+        <form hx-post="/login" hx-target="#light-container" hx-swap="outerHTML" hx-trigger="submit" action="/login" class="space-y-6">
             <!-- Email Field -->
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-200 mb-2">

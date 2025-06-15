@@ -353,8 +353,6 @@ func ServeAttemptLoginUser(w http.ResponseWriter, r *http.Request, db *database.
 	// Step 1: Get user from database
 	user, err := db.GetUserByEmail(r.Context(), email)
 	if err != nil {
-		// User not found or database error
-		// Don't reveal whether email exists - always say "invalid credentials"
 		http.Error(w, "Invalid email or password", http.StatusUnauthorized)
 		return
 	}
@@ -362,7 +360,6 @@ func ServeAttemptLoginUser(w http.ResponseWriter, r *http.Request, db *database.
 	// Step 2: Verify password
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
 	if err != nil {
-		// Password doesn't match
 		http.Error(w, "Invalid email or password", http.StatusUnauthorized)
 		return
 	}
@@ -381,11 +378,9 @@ func ServeAttemptLoginUser(w http.ResponseWriter, r *http.Request, db *database.
 
 	log.Printf("User logged in successfully: %s (ID: %d)", user.Email, user.ID)
 
-	// Step 5: Redirect to dashboard or return success response
-	// For HTMX, you might want to return a different response
 	if r.Header.Get("HX-Request") == "true" {
-		// HTMX request - return success fragment or redirect header
-		w.Header().Set("HX-Redirect", "/dashboard")
+		// Full page redirect to index - this will reload everything with user context
+		w.Header().Set("HX-Redirect", "/")
 		w.WriteHeader(http.StatusOK)
 		return
 	}
@@ -430,14 +425,24 @@ func ServeDashboard(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Create dashboard data
+	// Create dashboard data with all required fields
 	data := struct {
+		FirstName string
+		LastName  string
 		Email     string
 		UserID    int32
+		Zodiac    string
+		Year      string
+		Month     string
 		LoginTime string
 	}{
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
 		Email:     user.Email,
 		UserID:    user.ID,
+		Zodiac:    string(user.Zodiac.ZodiacSignEnum), // Convert enum to string
+		Year:      timeutil.CurrentTime.Year,
+		Month:     timeutil.CurrentTime.Month,
 		LoginTime: time.Now().Format("2006-01-02 15:04:05"),
 	}
 

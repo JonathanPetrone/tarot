@@ -1,29 +1,22 @@
 <!-- templates/dashboard.html - Just the content, no <html> wrapper -->
-      <div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 w-full mr-0 ml-2 mt-2 mb-4 md:mb-2 flex-grow flex flex-col p-4 justify-center md:min-w-[714px]">
-        <div class="flex justify-between items-center mb-8">
-          <h2 class="text-white text-2xl md:text-4xl">Welcome to Your Dashboard</h2>
-        </div>
+      <div id="light-container" class="rounded-2xl bg-slate-100 bg-opacity-10 w-full mr-0 ml-2 mt-2 mb-4 md:mb-2 flex-grow flex flex-col p-4 justify-start md:min-w-[714px]">
         
         <div class="bg-purple-800 bg-opacity-50 p-6 rounded-lg mb-6">
-          <h3 class="text-white text-2xl mb-4">Your Account</h3>
-          <p class="text-white"><strong>Email:</strong> {{.Email}}</p>
-          <p class="text-white"><strong>User ID:</strong> {{.UserID}}</p>
-          <p class="text-white"><strong>Login Time:</strong> {{.LoginTime}}</p>
+          <h3 class="text-white text-2xl mb-4">My Vault</h3>
+          <p class="text-white"><strong>Name:</strong> {{.FirstName}} {{.LastName}}</p>
+          <p class="text-white"><strong>Zodiac:</strong> {{.Zodiac}}</p>
         </div>
       
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-purple-800 bg-opacity-50 p-6 rounded-lg">
-            <h4 class="text-white text-xl mb-4">Your Readings</h4>
-            <a hx-get="/monthlyreadings?year={{.Year}}&month={{.Month}}" hx-target="#light-container" hx-swap="outerHTML" class="text-purple-300 hover:text-white">
-              View Monthly Readings →
-            </a>
+
+          <div class="rounded-lg">
+            <h4 class="text-white text-xl mb-4">Your Previous Personal Readings:</h4>
+            <p class="text-white text-l">No readings yet!</p>
           </div>
           
-          <div class="bg-purple-800 bg-opacity-50 p-6 rounded-lg">
-            <h4 class="text-white text-xl mb-4">Quick Reading</h4>
-            <a hx-get="/ask-1-card" hx-target="#light-container" hx-swap="outerHTML" class="text-purple-300 hover:text-white">
-              Draw a Card →
-            </a>
+          <div class="rounded-lg">
+            <h4 class="text-white text-xl mb-4">Buy Readings:</h4>
+            <p class="text-white text-l">Coming soon</p>
           </div>
         </div>
       </div>
